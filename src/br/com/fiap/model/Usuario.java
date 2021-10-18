@@ -2,12 +2,13 @@ package br.com.fiap.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class Usuario {
 	private int id;
 	private String nome;
-	//private LocalDate dataNascimento;
+	private LocalDate dataNascimento;
 	private String genero;
 	private String estadoUf;
 	private String estadoCivil;
@@ -29,14 +30,17 @@ public class Usuario {
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
+	
+	
 	public void setDataNascimento(LocalDate dataNascimento) {
+		
 		int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
 		int mesAtual = Calendar.getInstance().get(Calendar.MONTH);
 		int diaAtual = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-
-		LocalDate dataAtual = LocalDate.of(anoAtual, mesAtual, diaAtual);
-
-		int idade = Period.between(dataNascimento, dataAtual).getYears();
+		
+		LocalDate dataAtual = LocalDate.of(anoAtual, mesAtual, diaAtual);		
+		
+		int idade = Period.between(dataNascimento, dataAtual).getYears();			
 
 		if(idade <= 4){
 			System.out.println("Você ainda não atingiu a idade do nosso público alvo");
