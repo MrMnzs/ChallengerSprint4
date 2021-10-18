@@ -18,7 +18,7 @@ public class QuizDAO {
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO QUIZ () VALUES (?, ?, ?, ?, ?)");
 		
-		stmt.sets
+		stmt.se
 		
 		
 		stmt.execute();
