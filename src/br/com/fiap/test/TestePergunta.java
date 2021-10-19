@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import br.com.fiap.dao.PerguntaDAO;
 import br.com.fiap.model.Pergunta;
+import br.com.fiap.model.Quiz;
 import br.com.fiap.model.Resposta;
 
 
@@ -17,19 +18,24 @@ public class TestePergunta {
 		
 		Resposta r1 =  new Resposta();
 		
+		Quiz q1 = new Quiz();
+		
+		q1.setId(1);
+		
+		
 		r1.setId(5);
 		r1.setNrResposta(22);
 		r1.setDsResposta("Banana");
 		
 		p1.setId(21);
-		p1.getResposta().setId(5);
-		p1.getQuiz().setId(15);
+		p1.setResposta(r1);
+		p1.setQuiz(q1);
 		p1.setNrPergunta(21);
-		p1.setDsPergunta("EAe blz?");
 		
+		p1.setDsPergunta("EAe blz?");
 		dao.insert(p1);
 	
-		p1.setId(1);
+
 //		dao.delete(p1);		
 		
 		
