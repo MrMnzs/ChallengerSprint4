@@ -9,6 +9,7 @@ public class Quiz {
 	private int resultado;
 	private LocalDate data;
 	private Usuario usuario;
+	
 	public int getId() {
 		return id;
 	}

@@ -18,9 +18,8 @@ public class TesteResposta {
 			System.out.println(r.getId());
 			System.out.println(r.getNrResposta());
 			System.out.println(r.getDsResposta());
+			System.out.println("_______________");
 
 		}
-
 	}
-
 }

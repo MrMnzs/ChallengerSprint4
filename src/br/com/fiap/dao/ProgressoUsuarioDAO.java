@@ -12,15 +12,11 @@ import br.com.fiap.model.ProgressoUsuario;
 import br.com.fiap.model.Usuario;
 
 public class ProgressoUsuarioDAO {
-
 	
-	public void insert (ProgressoUsuario progresso) throws SQLException {
-				
+	public void insert (ProgressoUsuario progresso) throws SQLException {			
 		Connection conexao = new ConnectionFactory().getConnection();
-		
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO T_APL_USUARIO (id_progresso, id_usuario, vl_sintoma, ds_sintoma) VALUES (?, ?, ?, ?)");
-		
 		stmt.setInt(1,progresso.getId());
 		stmt.setInt(2,progresso.getUsuario().getId());
 		stmt.setInt(3,progresso.getVlSintoma());
