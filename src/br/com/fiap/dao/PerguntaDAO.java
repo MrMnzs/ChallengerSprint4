@@ -15,11 +15,13 @@ public class PerguntaDAO {
 		Connection conexao = new ConnectionFactory().getConnection();
 		
 		PreparedStatement stmt = conexao.prepareStatement(
-				"INSERT INTO T_APL_PERGUNTAS (id_perguntas, nr_perguntas, ds_perguntas) VALUES (?, ?, ?)");
+				"INSERT INTO T_APL_PERGUNTAS (id_perguntas, id_respostas, id_quiz, nr_perguntas, ds_perguntas) VALUES (?, ?, ?, ?, ?)");
 		
 		stmt.setInt(1,pergunta.getId());
-		stmt.setInt(2,pergunta.getNrPergunta());
-		stmt.setString(3, pergunta.getDsPergunta());		
+		stmt.setInt(2,pergunta.getResposta().getId());
+		stmt.setInt(3, pergunta.getQuiz().getId());		
+		stmt.setInt(4, pergunta.getNrPergunta());
+		stmt.setString(5, pergunta.getDsPergunta());
 		
 		stmt.execute();
 		System.out.println("Insert executado");
