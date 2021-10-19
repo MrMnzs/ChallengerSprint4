@@ -6,27 +6,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import br.com.fiap.connection.ConnectionFactory;
+import br.com.fiap.model.ProgressoUsuario;
 import br.com.fiap.model.Usuario;
 
-public class UsuarioDAO {
+public class ProgressoUsuarioDAO {
+
 	
-	public void insert (Usuario usuario) throws SQLException {
+	public void insert (ProgressoUsuario progresso) throws SQLException {
 				
 		Connection conexao = new ConnectionFactory().getConnection();
 		
 		PreparedStatement stmt = conexao.prepareStatement(
-				"INSERT INTO T_APL_USUARIO (id_usuario, nm_usuario, ds_email, dt_nascimento, ds_senha, ds_genero, ds_estado_civil, ds_estado_uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+				"INSERT INTO T_APL_USUARIO (id_progresso, id_usuario, vl_sintoma, ds_sintoma) VALUES (?, ?, ?, ?)");
 		
-		stmt.setInt(1,usuario.getId());
-		stmt.setString(2,usuario.getNome());
-		stmt.setString(3,usuario.getEmail());
-		stmt.setDate(4, Date.valueOf(usuario.getDataNascimento()));
-		stmt.setString(5,usuario.getSenha());
-		stmt.setString(6,usuario.getGenero());
-		stmt.setString(7,usuario.getEstadoCivil());
-		stmt.setString(8,usuario.getEstadoUf());
-		
+		stmt.setInt(1,progresso.getId());
+		stmt.setInt(2,progresso.getUsuario().getId());
+		stmt.setInt(3,progresso.getVlSintoma());
+		stmt.setString(4,progresso.getDsSintoma());
+
 		stmt.execute();
 		System.out.println("Insert executado");
 		stmt.close();
