@@ -8,8 +8,18 @@ import java.util.ArrayList;
 import br.com.fiap.connection.ConnectionFactory;
 import br.com.fiap.model.Resposta;
 
+/**
+ * Classe responsável por gravar e consultar dados relacionados a Resposta no banco de dados
+ * @author Giulio Cesar
+ *
+ */
 public class RespostaDAO {
 	
+	/**
+	 * Método responsável por inserir uma Resposta no banco de dados na tabela Resposta
+	 * @param resposta
+	 * @throws SQLException
+	 */
 	public void insert (Resposta resposta) throws SQLException {			
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -24,6 +34,11 @@ public class RespostaDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método que atualiza uma resposta já existente no banco de dados.
+	 * @param resposta
+	 * @throws SQLException
+	 */
 	public void update (Resposta resposta) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -41,6 +56,11 @@ public class RespostaDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método que deleda uma pergunta existente no banco de dados referente ao ID passado
+	 * @param resposta
+	 * @throws SQLException
+	 */
 	public void delete (Resposta resposta) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -54,6 +74,11 @@ public class RespostaDAO {
 		conexao.close();
 	}
 
+	/**
+	 * Método que lista todas as respostas existentes no banco de dados
+	 * @return Objeto Lista contendo todas as respostas no banco de dados
+	 * @throws SQLException
+	 */
 	public ArrayList<Resposta> getRespostas() throws SQLException{
 		ArrayList<Resposta> lista = new ArrayList<>();
 		
@@ -83,5 +108,4 @@ public class RespostaDAO {
 		
 		return lista;
 	}
-
 }

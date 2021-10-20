@@ -9,8 +9,18 @@ import java.util.ArrayList;
 import br.com.fiap.connection.ConnectionFactory;
 import br.com.fiap.model.Usuario;
 
+/**
+ * Classe responsável por gravar e consultar dados relacionados a Usuario no banco de dados
+ * @author Giulio Cesar
+ *
+ */
 public class UsuarioDAO {
 	
+	/**
+	 * Método utilizado para inserir um usuário no banco de dados
+	 * @param usuario
+	 * @throws SQLException
+	 */
 	public void insert (Usuario usuario) throws SQLException {
 				
 		Connection conexao = new ConnectionFactory().getConnection();
@@ -33,6 +43,11 @@ public class UsuarioDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método utilizado para atualizar um cadastro já existente de um usuário
+	 * @param usuario
+	 * @throws SQLException
+	 */
 	public void update (Usuario usuario) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -55,6 +70,11 @@ public class UsuarioDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método utilizado para deletar um usário existente no banco de dados
+	 * @param usuario
+	 * @throws SQLException
+	 */
 	public void delete (Usuario usuario) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -68,6 +88,11 @@ public class UsuarioDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método utilizado para listar todos os usuários existentes no banco de dados
+	 * @return Objeto Lista contendo todos os dados dos usuários cadastrados no banco de dados
+	 * @throws SQLException
+	 */
 	public ArrayList<Usuario> getUsuarios() throws SQLException{
 		ArrayList<Usuario> lista = new ArrayList<>();
 		
@@ -104,5 +129,4 @@ public class UsuarioDAO {
 		
 		return lista;
 	}
-	
 }

@@ -2,7 +2,6 @@ package br.com.fiap.model;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class Usuario {
@@ -30,7 +29,6 @@ public class Usuario {
 	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	
 	
 	public void setDataNascimento(LocalDate dataNascimento) {
 		
