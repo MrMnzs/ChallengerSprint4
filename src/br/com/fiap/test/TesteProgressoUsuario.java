@@ -18,6 +18,7 @@ public class TesteProgressoUsuario {
 		ProgressoUsuario p1 = new ProgressoUsuario();
 		
 		q1.setResultado(40);
+		q1.setResultado(50);
 		
 		u1.setId(11);
 		u1.setNome("Rafael");
