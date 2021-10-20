@@ -9,6 +9,9 @@ import br.com.fiap.model.Resposta;
 public class TesteResposta {
 
 	public static void main(String[] args) throws SQLException {
+		//Nem os usuários e nem os administradores do sistema farão alterações nas perguntas
+		//Perguntas UCLA são padrão e não devem ser alteradas. Muito menos deve-se adicionar perguntas.
+		
 		
 		RespostaDAO dao = new RespostaDAO();
 		

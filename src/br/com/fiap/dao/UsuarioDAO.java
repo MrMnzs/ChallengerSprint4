@@ -36,7 +36,7 @@ public class UsuarioDAO {
 	public void update (Usuario usuario) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
-				"UPDATE  T_APL_USUARIO SET nm_usuario=?, ds_email=?, dt_nascimento=?, ds_senha=?, ds_genero=?, ds_estado_civil=?, ds_estado_uf=? where id_usuario=?");
+				"UPDATE T_APL_USUARIO SET nm_usuario=?, ds_email=?, dt_nascimento=?, ds_senha=?, ds_genero=?, ds_estado_civil=?, ds_estado_uf=? where id_usuario=?");
 		
 		stmt.setString(1, usuario.getNome());
 		stmt.setString(2, usuario.getEmail());

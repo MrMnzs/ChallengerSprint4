@@ -44,18 +44,18 @@ public class TesteUsuario {
 		
 		ArrayList<Usuario> usuario = dao.getUsuarios();
 		
-//		for(Usuario u: usuario) {
-//			System.out.println(u.getId());
-//			System.out.println(u.getNome());
-//			System.out.println(u.getEmail());
-//			System.out.println(u.getDataNascimento());
-//			System.out.println(u.getGenero());
-//			System.out.println(u.getEstadoCivil());
-//			System.out.println(u.getEstadoUf());
-//			System.out.println("_________________");
-//		
-//		}
-//		
+		for(Usuario u: usuario) {
+			System.out.println(u.getId());
+			System.out.println(u.getNome());
+			System.out.println(u.getEmail());
+			System.out.println(u.getDataNascimento());
+			System.out.println(u.getGenero());
+			System.out.println(u.getEstadoCivil());
+			System.out.println(u.getEstadoUf());
+			System.out.println("_________________");
+		
+		}
+		
 	}
 
 }

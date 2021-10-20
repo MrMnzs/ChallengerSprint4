@@ -36,17 +36,19 @@ public class ProgressoUsuario {
 		ArrayList<Double> medias = new ArrayList<>();
 		ArrayList<Integer> resultados = new ArrayList<>();
 
-		resultados.add(quiz.getResultado());
+		resultados.add(this.quiz.getResultado());
 		
 		for(int r = 0; r < resultados.size(); r++ ) {
-			int soma = lista.stream().mapToInt(Integer::intValue).sum();
-			this.vlSintoma = resultado / 10;
+			int soma = resultados.stream().mapToInt(Integer::intValue).sum();
+			this.vlSintoma = soma / 10;
 		}
 		;
-		medias.add(vlSintoma);
+		medias.add((double) vlSintoma);
 		System.out.println(medias);
 		return vlSintoma;
 	}
+	
+	
 	public void setVlSintoma(int vlSintoma) {
 		this.vlSintoma = vlSintoma;
 	}

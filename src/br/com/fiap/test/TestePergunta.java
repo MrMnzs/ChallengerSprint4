@@ -23,21 +23,15 @@ public class TestePergunta {
 		r1.setNrResposta(1);
 		r1.setDsResposta("nunca");
 		
-//		p1.setId(22);
-//		p1.setResposta(r1);
-//		p1.setQuiz(q1);
-//		p1.setNrPergunta(22);
-//		p1.setDsPergunta("teste");
+		p1.setId(22);
+		p1.setResposta(r1);
+		p1.setQuiz(q1);
+		p1.setNrPergunta(22);
+		p1.setDsPergunta("teste");
 		
 		//dao.insert(p1);
 		//dao.delete(p1);
-
-		Pergunta pUpdate = new Pergunta();
-		pUpdate.setNrPergunta(59);
-		pUpdate.setDsPergunta("Boaaa timee");
-		pUpdate.setId(9);
-
-		//dao.update(pUpdate);
+		//dao.update(p1);
 				
 		ArrayList<Pergunta> pergunta = dao.getPerguntas();
 		

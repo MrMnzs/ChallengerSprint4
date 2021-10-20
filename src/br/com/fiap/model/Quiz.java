@@ -1,12 +1,10 @@
 package br.com.fiap.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Quiz {
 	private int id;
-	private Pergunta pergunta;
-	private Resposta alternativa;
+	private ProgressoUsuario progresso;
 	private int resultado;
 	private LocalDate data;
 	private Usuario usuario;
@@ -17,18 +15,14 @@ public class Quiz {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Pergunta getPergunta() {
-		return pergunta;
+
+	public ProgressoUsuario getProgresso() {
+		return progresso;
 	}
-	public void setPergunta(Pergunta pergunta) {
-		this.pergunta = pergunta;
+	public void setProgresso(ProgressoUsuario progresso) {
+		this.progresso = progresso;
 	}
-	public Resposta getAlternativa() {
-		return alternativa;
-	}
-	public void setAlternativa(Resposta alternativa) {
-		this.alternativa = alternativa;
-	}
+
 	public int getResultado() {
 		
 		return resultado;
