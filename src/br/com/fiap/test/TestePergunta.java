@@ -13,52 +13,41 @@ public class TestePergunta {
 	public static void main(String[] args) throws SQLException {
 		
 		PerguntaDAO dao = new PerguntaDAO();
-		
 		Pergunta p1 = new Pergunta();
-		
 		Resposta r1 =  new Resposta();
-		
 		Quiz q1 = new Quiz();
 		
-		q1.setId(1);
+		q1.setId(2);
 		
+		r1.setId(1);
+		r1.setNrResposta(1);
+		r1.setDsResposta("nunca");
 		
-		r1.setId(5);
-		r1.setNrResposta(22);
-		r1.setDsResposta("Banana");
+//		p1.setId(22);
+//		p1.setResposta(r1);
+//		p1.setQuiz(q1);
+//		p1.setNrPergunta(22);
+//		p1.setDsPergunta("teste");
 		
-		p1.setId(21);
-		p1.setResposta(r1);
-		p1.setQuiz(q1);
-		p1.setNrPergunta(21);
-		
-		p1.setDsPergunta("EAe blz?");
-		dao.insert(p1);
-	
+		//dao.insert(p1);
+		//dao.delete(p1);
 
-//		dao.delete(p1);		
+		Pergunta pUpdate = new Pergunta();
+		pUpdate.setNrPergunta(59);
+		pUpdate.setDsPergunta("Boaaa timee");
+		pUpdate.setId(9);
+
+		//dao.update(pUpdate);
+				
+		ArrayList<Pergunta> pergunta = dao.getPerguntas();
 		
-		
-//		p1.setResposta(r1.getId());
-//		p1.getQuiz().setId(8);
-//		p1.setNrPergunta(20);
-//		p1.setDsPergunta("VAAAAAAAAAAAAAAAAAI CARAAAAI");
-//		p1.setId(2);
-//		
-//		dao.update(p1);
-		
-		
-//				
-//		ArrayList<Pergunta> pergunta = dao.getPerguntas();
-//		
-//		for(Pergunta u : pergunta) {
-//			System.out.println(u.getId());
-//			System.out.println(u.getNrPergunta());
-//			System.out.println(u.getDsPergunta());
-//		}
-		
-		
-		
+		for(Pergunta u : pergunta) {
+			System.out.println("Id Pergunta: " + u.getId());
+			System.out.println("Número da Pergunta: " + u.getNrPergunta());
+			System.out.println("Texto da Pergunta: " + u.getDsPergunta());
+			System.out.println("------------------");			
+		}
+			
 	}
 
 }

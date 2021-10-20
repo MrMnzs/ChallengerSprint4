@@ -1,6 +1,7 @@
 package br.com.fiap.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Quiz {
 	private int id;
@@ -29,6 +30,7 @@ public class Quiz {
 		this.alternativa = alternativa;
 	}
 	public int getResultado() {
+		
 		return resultado;
 	}
 	public void setResultado(int resultado) {
