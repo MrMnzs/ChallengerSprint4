@@ -7,9 +7,18 @@ import java.util.ArrayList;
 import br.com.fiap.connection.ConnectionFactory;
 import br.com.fiap.model.Pergunta;
 
-
+/**
+ * Classe responsável por gravar e consultar dados relacionados a pergunta no banco de dados
+ * @author Giulio Cesar
+ *
+ */
 public class PerguntaDAO {
 	
+	/**
+	 * Método que faz a inserção de uma Pergunta na tabela T_APL_PERGUNTA no banco de dados
+	 * @param pergunta
+	 * @throws SQLException
+	 */
 	public void insert (Pergunta pergunta) throws SQLException {
 		
 		Connection conexao = new ConnectionFactory().getConnection();
@@ -29,6 +38,11 @@ public class PerguntaDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método que faz a atualização de um ou todos os dados de Pergunta no banco de dados
+	 * @param pergunta
+	 * @throws SQLException
+	 */
 	public void update (Pergunta pergunta) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -45,6 +59,11 @@ public class PerguntaDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método que deleta alguma pergunta do banco de dados
+	 * @param pergunta
+	 * @throws SQLException
+	 */
 	public void delete (Pergunta pergunta) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -57,7 +76,12 @@ public class PerguntaDAO {
 		stmt.close();
 		conexao.close();
 	}
-	
+		
+	/**
+	 * Método que lista todas as perguntas existentes no banco de dados
+	 * @return Lista de todas as perguntas no banco de dados
+	 * @throws SQLException
+	 */
 	public ArrayList<Pergunta> getPerguntas() throws SQLException{
 		ArrayList<Pergunta> lista = new ArrayList<>();
 		
@@ -86,5 +110,4 @@ public class PerguntaDAO {
 		
 		return lista;
 	}
-	
 }

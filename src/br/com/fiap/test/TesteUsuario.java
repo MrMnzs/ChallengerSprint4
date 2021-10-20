@@ -15,10 +15,10 @@ public class TesteUsuario {
 		
 		Usuario u1 = new Usuario();
 		
-		u1.setId(5);
+		u1.setId(11);
 		u1.setNome("Caue");
 		u1.setEmail("caue@caue");		
-		u1.setDataNascimento(LocalDate.of(2005, 06, 26));
+		u1.setDataNascimento(LocalDate.of(2000, 06, 26));
 		u1.setSenha("123899");
 		u1.setGenero("H");
 		u1.setEstadoCivil("Solteiro");

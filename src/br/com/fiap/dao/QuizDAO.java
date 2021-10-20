@@ -5,19 +5,24 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-
 import br.com.fiap.connection.ConnectionFactory;
-import br.com.fiap.model.Pergunta;
 import br.com.fiap.model.ProgressoUsuario;
 import br.com.fiap.model.Quiz;
-import br.com.fiap.model.Resposta;
 import br.com.fiap.model.Usuario;
 
+/**
+ * Classe responsável por gravar e consultar dados relacionados a Quiz no banco de dados
+ * @author Giulio Cesar
+ *
+ */
 public class QuizDAO {
 
-
+	/**
+	 * Método responsável por inserir um Quiz no banco de dados, inserindo todos os seus dados.
+	 * @param quiz
+	 * @throws SQLException
+	 */
 	public void insert (Quiz quiz) throws SQLException {
 		
 		Connection conexao = new ConnectionFactory().getConnection();
@@ -37,6 +42,11 @@ public class QuizDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método que faz a atualização de um ou mais dados de Quiz no banco de dados
+	 * @param quiz
+	 * @throws SQLException
+	 */
 	public void update (Quiz quiz) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -56,6 +66,11 @@ public class QuizDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método que exclui um registro de Quiz no banco de dados passando como referência o Id do Quiz
+	 * @param quiz
+	 * @throws SQLException
+	 */
 	public void delete (Quiz quiz) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
@@ -68,12 +83,17 @@ public class QuizDAO {
 		conexao.close();
 	}
 	
+	/**
+	 * Método responsável por listar todos os Quiz existente no banco de dados
+	 * @return Lista com todos os Quiz cadastrados no banco de dados
+	 * @throws SQLException
+	 */
 	public ArrayList<Quiz> getQuiz() throws SQLException{
 		ArrayList<Quiz> lista = new ArrayList<>();
 		
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
-				"SELECT id_quiz, id_suuario, id_progresso, dt_quiz, vl_quiz FROM T_APL_QUIZ ORDER BY id_quiz");
+				"SELECT id_quiz, id_usuario, id_progresso, dt_quiz, vl_quiz FROM T_APL_QUIZ ORDER BY id_quiz");
 		stmt.execute();
 		
 		ResultSet rs = stmt.getResultSet();
@@ -86,6 +106,7 @@ public class QuizDAO {
 			Usuario u = new Usuario();
 			u.setId(rs.getInt("id_usuario"));
 			quiz.setUsuario(u);
+			
 			
 			ProgressoUsuario p = new ProgressoUsuario();
 			p.setId(rs.getInt("id_progresso"));
@@ -105,6 +126,12 @@ public class QuizDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método responsável por listar todos os progressos de um usuário com base nas suas respostas
+	 * @param Usuário
+	 * @return Lista com todos os pontos que um único usuário fez
+	 * @throws SQLException
+	 */
 	public ArrayList<Quiz> getPontuacao(Usuario u) throws SQLException{
 		ArrayList<Quiz> lista = new ArrayList<>();
 		Connection conexao = new ConnectionFactory().getConnection();
@@ -121,8 +148,12 @@ public class QuizDAO {
 			
 			u.setNome(rs.getString("NM_USUARIO"));
 			u.setId(rs.getInt("ID_USUARIO"));
-			quiz.setUsuario(u);
 			
+			ProgressoUsuario p = new ProgressoUsuario();
+			p.setId(rs.getInt("VL_QUIZ"));
+			quiz.setProgresso(p);
+			
+			quiz.setUsuario(u);
 			quiz.setId(rs.getInt("ID_QUIZ"));
 			quiz.setResultado(rs.getInt("VL_QUIZ"));
 			
@@ -130,15 +161,12 @@ public class QuizDAO {
 
 		}
 		
-		
 		rs.close();
 		stmt.close();
 		conexao.close();
 		
 		return lista;
-
 	}
-	
 }
 
 
