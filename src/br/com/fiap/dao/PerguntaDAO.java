@@ -32,17 +32,13 @@ public class PerguntaDAO {
 	public void update (Pergunta pergunta) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
-				"UPDATE T_APL_PERGUNTAS SET id_resposta=?, id_quiz=?, nr_perguntas=?, ds_perguntas=? WHERE id_perguntas=?");
+				"UPDATE T_APL_PERGUNTAS SET nr_perguntas=?, ds_perguntas=? WHERE id_perguntas=?");
 
-		stmt.setInt(1, pergunta.getResposta().getId());
-		stmt.setInt(2, pergunta.getQuiz().getId());
-		stmt.setInt(3, pergunta.getNrPergunta());
-		stmt.setString(4, pergunta.getDsPergunta());
-		stmt.setInt(5, pergunta.getId());
-		
+		stmt.setInt(1, pergunta.getNrPergunta());
+		stmt.setString(2, pergunta.getDsPergunta());
+		stmt.setInt(3, pergunta.getId());
 				
 		stmt.execute();
-		
 		System.out.println("Update executado");
 
 		stmt.close();
