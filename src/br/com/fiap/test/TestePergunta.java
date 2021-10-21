@@ -23,22 +23,21 @@ public class TestePergunta {
 		r1.setNrResposta(1);
 		r1.setDsResposta("nunca");
 		
-		p1.setId(22);
+		p1.setId(99);
 		p1.setResposta(r1);
 		p1.setQuiz(q1);
 		p1.setNrPergunta(22);
-		p1.setDsPergunta("teste");
+		p1.setDsPergunta("teste123");
 		
-		//dao.insert(p1);
+		dao.insert(p1);
 		//dao.delete(p1);
 		//dao.update(p1);
 				
 		ArrayList<Pergunta> pergunta = dao.getPerguntas();
-		System.out.println(pergunta);
-		for(Pergunta u : pergunta) {
-			System.out.println("Id Pergunta: " + u.getId());
-			System.out.println("Número da Pergunta: " + u.getNrPergunta());
-			System.out.println("Texto da Pergunta: " + u.getDsPergunta());
+		for(Pergunta p : pergunta) {
+			System.out.println("Id Pergunta: " + p.getId());
+			System.out.println("Número da Pergunta: " + p.getNrPergunta());
+			System.out.println("Texto da Pergunta: " + p.getDsPergunta());
 			System.out.println("------------------");			
 		}
 			
