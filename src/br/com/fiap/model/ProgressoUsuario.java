@@ -1,7 +1,5 @@
 package br.com.fiap.model;
 
-import java.util.ArrayList;
-
 public class ProgressoUsuario {
 	private int id;
 	private Usuario usuario;
@@ -32,19 +30,6 @@ public class ProgressoUsuario {
 		//TO DO
 	}
 	public int getVlSintoma() {
-		
-		ArrayList<Double> medias = new ArrayList<>();
-		ArrayList<Integer> resultados = new ArrayList<>();
-
-		resultados.add(this.quiz.getResultado());
-		
-		for(int r = 0; r < resultados.size(); r++ ) {
-			int soma = resultados.stream().mapToInt(Integer::intValue).sum();
-			this.vlSintoma = soma / 10;
-		}
-		;
-		medias.add((double) vlSintoma);
-		System.out.println(medias);
 		return vlSintoma;
 	}
 	

@@ -6,13 +6,13 @@ import br.com.fiap.dao.PerguntaDAO;
 import br.com.fiap.model.Pergunta;
 import br.com.fiap.model.Quiz;
 import br.com.fiap.model.Resposta;
+import br.com.fiap.service.PerguntaService;
 
 
 public class TestePergunta {
 
 	public static void main(String[] args) throws SQLException {
 		
-		PerguntaDAO dao = new PerguntaDAO();
 		Pergunta p1 = new Pergunta();
 		Resposta r1 =  new Resposta();
 		Quiz q1 = new Quiz();
@@ -29,18 +29,19 @@ public class TestePergunta {
 		p1.setNrPergunta(22);
 		p1.setDsPergunta("teste123");
 		
-		dao.insert(p1);
+		//dao.insert(p1);
 		//dao.delete(p1);
 		//dao.update(p1);
 				
-		ArrayList<Pergunta> pergunta = dao.getPerguntas();
-		for(Pergunta p : pergunta) {
-			System.out.println("Id Pergunta: " + p.getId());
-			System.out.println("Número da Pergunta: " + p.getNrPergunta());
-			System.out.println("Texto da Pergunta: " + p.getDsPergunta());
-			System.out.println("------------------");			
-		}
-			
+//		ArrayList<Pergunta> pergunta = dao.getPerguntas();
+//		for(Pergunta p : pergunta) {
+//			System.out.println("Id Pergunta: " + p.getId());
+//			System.out.println("Número da Pergunta: " + p.getNrPergunta());
+//			System.out.println("Texto da Pergunta: " + p.getDsPergunta());
+//			System.out.println("------------------");			
+//		}
+		PerguntaService ps = new PerguntaService();
+		ps.listar();
 	}
 
 }

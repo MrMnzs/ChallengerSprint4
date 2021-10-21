@@ -1,5 +1,7 @@
 package br.com.fiap.test;
 
+import java.sql.SQLException;
+
 import br.com.fiap.dao.ProgressoUsuarioDAO;
 import br.com.fiap.model.ProgressoUsuario;
 import br.com.fiap.model.Quiz;
@@ -7,7 +9,7 @@ import br.com.fiap.model.Usuario;
 
 public class TesteProgressoUsuario {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 
 		ProgressoUsuarioDAO dao = new ProgressoUsuarioDAO();
 		
@@ -26,10 +28,11 @@ public class TesteProgressoUsuario {
 		p1.setQuiz(q1);
 		p1.setDsSintoma("Parabéns");
 
-		p1.setVlSintoma(p1.getVlSintoma());
+		p1.setVlSintoma(10);
 		
 //		System.out.println(p1.getVlSintoma());
 
+		dao.update(p1);
 	}
 
 }
