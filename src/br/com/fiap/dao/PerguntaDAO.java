@@ -110,7 +110,7 @@ public class PerguntaDAO {
 			lista.add(pergunta);
 		}
 		
-		System.out.println(lista);
+		//System.out.println(lista);
 				
 		rs.close();
 		stmt.close();
