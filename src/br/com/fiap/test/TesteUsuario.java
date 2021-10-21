@@ -53,9 +53,7 @@ public class TesteUsuario {
 			System.out.println(u.getEstadoCivil());
 			System.out.println(u.getEstadoUf());
 			System.out.println("_________________");
-		
 		}
-		
-	}
 
+	}
 }

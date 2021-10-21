@@ -27,18 +27,25 @@ public class UsuarioDAO {
 		
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO T_APL_USUARIO (id_usuario, nm_usuario, ds_email, dt_nascimento, ds_senha, ds_genero, ds_estado_civil, ds_estado_uf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		try {
+			stmt.setInt(1,usuario.getId());
+			stmt.setString(2,usuario.getNome());
+			stmt.setString(3,usuario.getEmail());
+			stmt.setDate(4, Date.valueOf(usuario.getDataNascimento()));
+			stmt.setString(5,usuario.getSenha());
+			stmt.setString(6,usuario.getGenero());
+			stmt.setString(7,usuario.getEstadoCivil());
+			stmt.setString(8,usuario.getEstadoUf());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.setInt(1,usuario.getId());
-		stmt.setString(2,usuario.getNome());
-		stmt.setString(3,usuario.getEmail());
-		stmt.setDate(4, Date.valueOf(usuario.getDataNascimento()));
-		stmt.setString(5,usuario.getSenha());
-		stmt.setString(6,usuario.getGenero());
-		stmt.setString(7,usuario.getEstadoCivil());
-		stmt.setString(8,usuario.getEstadoUf());
-		
-		stmt.execute();
-		System.out.println("Insert executado");
+		try {
+			stmt.execute();
+			System.out.println("Insert executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+		}
 		stmt.close();
 		conexao.close();
 	}

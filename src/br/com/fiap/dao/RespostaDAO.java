@@ -24,12 +24,20 @@ public class RespostaDAO {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO T_APL_RESPOSTA (id_resposta, nr_resposta, ds_resposta) VALUES (?, ?, ?)");
-		stmt.setInt(1,resposta.getId());
-		stmt.setInt(2,resposta.getNrResposta());
-		stmt.setString(3,resposta.getDsResposta());
-
-		stmt.execute();
-		System.out.println("Insert executado");
+		try {
+			stmt.setInt(1,resposta.getId());
+			stmt.setInt(2,resposta.getNrResposta());
+			stmt.setString(3,resposta.getDsResposta());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
+		
+		try {
+			stmt.execute();
+			System.out.println("Insert executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+		}
 		stmt.close();
 		conexao.close();
 	}

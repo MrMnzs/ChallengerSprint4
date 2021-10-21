@@ -34,7 +34,7 @@ public class TestePergunta {
 		//dao.update(p1);
 				
 		ArrayList<Pergunta> pergunta = dao.getPerguntas();
-		
+		System.out.println(pergunta);
 		for(Pergunta u : pergunta) {
 			System.out.println("Id Pergunta: " + u.getId());
 			System.out.println("Número da Pergunta: " + u.getNrPergunta());

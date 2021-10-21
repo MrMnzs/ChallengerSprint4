@@ -25,15 +25,23 @@ public class PerguntaDAO {
 		
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO T_APL_PERGUNTAS (id_perguntas, id_respostas, id_quiz, nr_perguntas, ds_perguntas) VALUES (?, ?, ?, ?, ?)");
+		try {
+			stmt.setInt(1,pergunta.getId());
+			stmt.setInt(2,pergunta.getResposta().getId());
+			stmt.setInt(3, pergunta.getQuiz().getId());		
+			stmt.setInt(4, pergunta.getNrPergunta());
+			stmt.setString(5, pergunta.getDsPergunta());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.setInt(1,pergunta.getId());
-		stmt.setInt(2,pergunta.getResposta().getId());
-		stmt.setInt(3, pergunta.getQuiz().getId());		
-		stmt.setInt(4, pergunta.getNrPergunta());
-		stmt.setString(5, pergunta.getDsPergunta());
+		try {
+			stmt.execute();
+			System.out.println("Insert executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+		}
 		
-		stmt.execute();
-		System.out.println("Insert executado");
 		stmt.close();
 		conexao.close();
 	}

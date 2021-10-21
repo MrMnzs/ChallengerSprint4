@@ -12,7 +12,6 @@ import br.com.fiap.model.Usuario;
 /**
  * Classe responsável por gravar e consultar dados relacionados a ProgressoUsuario no banco de dados
  * @author Giulio Cesar
- *
  */
 public class ProgressoUsuarioDAO {
 	
@@ -25,13 +24,22 @@ public class ProgressoUsuarioDAO {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO T_APL_PROGRESSO (id_progresso, id_usuario, vl_sintoma, ds_sintoma) VALUES (?, ?, ?, ?)");
-		stmt.setInt(1,progresso.getId());
-		stmt.setInt(2,progresso.getUsuario().getId());
-		stmt.setInt(3,progresso.getVlSintoma());
-		stmt.setString(4,progresso.getDsSintoma());
-
-		stmt.execute();
-		System.out.println("Insert executado");
+		try {
+			stmt.setInt(1,progresso.getId());
+			stmt.setInt(2,progresso.getUsuario().getId());
+			stmt.setInt(3,progresso.getVlSintoma());
+			stmt.setString(4,progresso.getDsSintoma());
+			
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
+		
+		try {
+			stmt.execute();
+			System.out.println("Insert executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+		}
 		stmt.close();
 		conexao.close();
 	}
@@ -113,5 +121,4 @@ public class ProgressoUsuarioDAO {
 		
 		return lista;
 	}
-
 }

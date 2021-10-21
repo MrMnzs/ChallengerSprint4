@@ -29,15 +29,23 @@ public class QuizDAO {
 		
 		PreparedStatement stmt = conexao.prepareStatement(
 				"INSERT INTO T_APL_QUIZ (id_quiz, id_usuario, id_progresso, dt_quiz, vl_quiz) VALUES (?, ?, ?, ?, ?)");
+		try {
+			stmt.setInt(1,quiz.getId());
+			stmt.setInt(2,quiz.getUsuario().getId());
+			stmt.setInt(3, quiz.getProgresso().getId());		
+			stmt.setDate(4, Date.valueOf(quiz.getData()));
+			stmt.setInt(5, quiz.getResultado());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.setInt(1,quiz.getId());
-		stmt.setInt(2,quiz.getUsuario().getId());
-		stmt.setInt(3, quiz.getProgresso().getId());		
-		stmt.setDate(4, Date.valueOf(quiz.getData()));
-		stmt.setInt(5, quiz.getResultado());
+		try {
+			stmt.execute();
+			System.out.println("Insert executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+		}
 		
-		stmt.execute();
-		System.out.println("Insert executado");
 		stmt.close();
 		conexao.close();
 	}
@@ -113,7 +121,7 @@ public class QuizDAO {
 			quiz.setProgresso(p);
 			
 			quiz.setData(rs.getDate(4).toLocalDate());
-			quiz.setResultado(rs.getInt("vl_quiz"));
+			
 			
 			lista.add(quiz);
 		}
@@ -126,47 +134,45 @@ public class QuizDAO {
 		return lista;
 	}
 	
-	/**
-	 * Método responsável por listar todos os progressos de um usuário com base nas suas respostas
-	 * @param Usuário
-	 * @return Lista com todos os pontos que um único usuário fez
-	 * @throws SQLException
-	 */
-	public ArrayList<Quiz> getPontuacao(Usuario u) throws SQLException{
-		ArrayList<Quiz> lista = new ArrayList<>();
-		Connection conexao = new ConnectionFactory().getConnection();
-		PreparedStatement stmt = conexao.prepareStatement(
-				"SELECT U.NM_USUARIO, U.ID_USUARIO, Q.ID_QUIZ, Q.VL_QUIZ FROM T_APL_USUARIO U INNER JOIN T_APL_QUIZ Q ON (U.ID_USUARIO = Q.ID_USUARIO) WHERE U.ID_USUARIO=?");
-		stmt.setInt(1, u.getId());
-		stmt.execute();
-	
-		ResultSet rs = stmt.getResultSet();
-		
-		while(rs.next()) {
-
-			Quiz quiz = new Quiz();
-			
-			u.setNome(rs.getString("NM_USUARIO"));
-			u.setId(rs.getInt("ID_USUARIO"));
-			
-			ProgressoUsuario p = new ProgressoUsuario();
-			p.setId(rs.getInt("VL_QUIZ"));
-			quiz.setProgresso(p);
-			
-			quiz.setUsuario(u);
-			quiz.setId(rs.getInt("ID_QUIZ"));
-			quiz.setResultado(rs.getInt("VL_QUIZ"));
-			
-			lista.add(quiz);
-
-		}
-		
-		rs.close();
-		stmt.close();
-		conexao.close();
-		
-		return lista;
-	}
+//	/**
+//	 * Método responsável por listar todos os progressos de um usuário com base nas suas respostas
+//	 * @param Usuário
+//	 * @return Lista com todos os pontos que um único usuário fez
+//	 * @throws SQLException
+//	 */
+//	public ArrayList<Quiz> getPontuacao(Usuario u) throws SQLException{
+//		ArrayList<Quiz> lista = new ArrayList<>();
+//		Connection conexao = new ConnectionFactory().getConnection();
+//		PreparedStatement stmt = conexao.prepareStatement(
+//				"SELECT NM_USUARIO, ID_USUARIO, ID_QUIZ, VL_QUIZ FROM T_APL_QUIZ INNER JOIN T_APL_USUARIO ON (ID_USUARIO = ID_USUARIO) WHERE ID_USUARIO=?");
+//		stmt.setInt(1, u.getId());
+//		stmt.execute();
+//	
+//		ResultSet rs = stmt.getResultSet();
+//		
+//		while(rs.next()) {
+//
+//			Quiz quiz = new Quiz();
+//			
+//			u.setNome(rs.getString("NM_USUARIO"));
+//			u.setId(rs.getInt("ID_USUARIO"));
+//			
+//			ProgressoUsuario p = new ProgressoUsuario();
+//			p.setId(rs.getInt("VL_QUIZ"));
+//			quiz.setProgresso(p);			
+//			quiz.setUsuario(u);
+//			
+//			quiz.setId(rs.getInt("id_quiz"));
+//			quiz.setResultado(rs.getInt("vl_quiz"));
+//			
+//			lista.add(quiz);
+//
+//		}
+//		
+//		rs.close();
+//		stmt.close();
+//		conexao.close();
+//		
+//		return lista;
+//	}
 }
-
-
