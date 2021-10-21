@@ -37,7 +37,7 @@ public class TesteQuiz {
 		prog1.setVlSintoma(0);
 		
 		Usuario u1 = new Usuario();
-		u1.setId(5);
+		u1.setId(6);
 		u1.setNome("Andre");
 		u1.setEmail("caue@caue");		
 		u1.setDataNascimento(LocalDate.of(2005, 06, 26));
@@ -75,18 +75,15 @@ public class TesteQuiz {
 		}
 
 		
-		ArrayList<Quiz> valores = dao.getPontuacao(u1);
-		Quiz qpont = new Quiz();
-		qpont.setUsuario(u1);
-		for(int i=0; i < valores.size(); i++) {
-			System.out.println(qpont.getUsuario().getNome());
-			System.out.println(qpont.getUsuario().getId());
-			System.out.println(qpont.getId());
-			System.out.println(qpont.getResultado());
-		}
-		
-		
-	
-		
+//		ArrayList<Quiz> valores = dao.getPontuacao(u1);
+//		Quiz qpont = new Quiz();
+//		qpont.setUsuario(u1);
+//		for(int i=0; i < valores.size(); i++) {
+//			System.out.println("Nome: "+qpont.getUsuario().getNome());
+//			System.out.println("Id usuário: " + qpont.getUsuario().getId());
+//			System.out.println("Id quiz: " + qpont.getId());
+//			System.out.println("Pontuação quiz: " + qpont.getResultado());
+//			System.out.println("-----------------------------------");
+//		}
 	}
 }

@@ -12,8 +12,6 @@ public class TesteProgressoUsuario {
 		ProgressoUsuarioDAO dao = new ProgressoUsuarioDAO();
 		
 		Quiz q1 = new Quiz();
-		Quiz q2 = new Quiz();
-
 		Usuario u1 = new Usuario();
 		ProgressoUsuario p1 = new ProgressoUsuario();
 		
