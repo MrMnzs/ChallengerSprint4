@@ -8,15 +8,15 @@ import br.com.fiap.connection.ConnectionFactory;
 import br.com.fiap.model.Pergunta;
 
 /**
- * Classe responsável por gravar e consultar dados relacionados a pergunta no banco de dados
+ * Classe que grava e consulta dados relacionados a pergunta no banco de dados.
  * @author Giulio Cesar
  *
  */
 public class PerguntaDAO {
 	
 	/**
-	 * Método que faz a inserção de uma Pergunta na tabela T_APL_PERGUNTA no banco de dados
-	 * @param pergunta
+	 * Insere dados de uma pergunta no banco de dados.
+	 * @param Objeto do tipo Pergunta
 	 * @throws SQLException
 	 */
 	public void insert (Pergunta pergunta) throws SQLException {
@@ -32,7 +32,7 @@ public class PerguntaDAO {
 			stmt.setInt(4, pergunta.getNrPergunta());
 			stmt.setString(5, pergunta.getDsPergunta());
 		}catch(NullPointerException e){
-	        System.out.print("NullPointerException caught");
+	        System.out.print("NullPointerException");
 	    }
 		
 		try {
@@ -42,13 +42,17 @@ public class PerguntaDAO {
 			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
 		}
 		
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	/**
-	 * Método que faz a atualização de um ou todos os dados de Pergunta no banco de dados
-	 * @param pergunta
+	 * Atualiza um registro de pergunta no banco de dados
+	 * @param Objeto do tipo Pergunta
 	 * @throws SQLException
 	 */
 	public void update (Pergunta pergunta) throws SQLException {
@@ -56,19 +60,30 @@ public class PerguntaDAO {
 		PreparedStatement stmt = conexao.prepareStatement(
 				"UPDATE T_APL_PERGUNTAS SET nr_perguntas=?, ds_perguntas=? WHERE id_perguntas=?");
 
-		stmt.setInt(1, pergunta.getNrPergunta());
-		stmt.setString(2, pergunta.getDsPergunta());
-		stmt.setInt(3, pergunta.getId());
-				
-		stmt.execute();
-		System.out.println("Update executado");
-
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.setInt(1, pergunta.getNrPergunta());
+			stmt.setString(2, pergunta.getDsPergunta());
+			stmt.setInt(3, pergunta.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }	
+		
+		try {
+			stmt.execute();
+			System.out.println("Update executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro a atualizar a pergunta. Lembre-se, para atualizar é necessário que o ID exista no banco e que perguntas não devem se repetir");
+		}
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+            ex.printStackTrace();
+        }
 	}
 	
 	/**
-	 * Método que deleta alguma pergunta do banco de dados
+	 * Deleta um resitro de pergunta do banco de dados.
 	 * @param pergunta
 	 * @throws SQLException
 	 */
@@ -76,18 +91,30 @@ public class PerguntaDAO {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"DELETE FROM T_APL_PERGUNTAS WHERE id_perguntas=?");
+		try {
+			stmt.setInt(1, pergunta.getId());
+		}catch(NullPointerException e) {
+			System.out.println("NullPointerException caught");
+		}
 		
-		stmt.setInt(1, pergunta.getId());
-		stmt.execute();
+		try {
+			stmt.execute();
+			System.out.println("Delete executado");			
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro ao deletar a pergunta, veifique se o ID da pergunta existe no banco de dados");
+		}
 		
-		System.out.println("Delete executado");
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+            ex.printStackTrace();
+        }
 	}
 		
 	/**
-	 * Método que lista todas as perguntas existentes no banco de dados
-	 * @return Lista de todas as perguntas no banco de dados
+	 * Lista todos os registros de pergunta no banco de dados.
+	 * @return Lista com todas as perguntas no banco de dados.
 	 * @throws SQLException
 	 */
 	public ArrayList<Pergunta> getPerguntas() throws SQLException{
@@ -98,7 +125,11 @@ public class PerguntaDAO {
 		PreparedStatement stmt = conexao.prepareStatement(
 				"SELECT id_perguntas, nr_perguntas, ds_perguntas FROM T_APL_PERGUNTAS order by id_perguntas");
 		
-		stmt.execute();
+		try {
+			stmt.execute();
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro na leitura, se existem dados no banco");
+		}
 		
 		ResultSet rs = stmt.getResultSet();
 		
@@ -111,11 +142,13 @@ public class PerguntaDAO {
 		}
 		
 		//System.out.println(lista);
-				
-		rs.close();
-		stmt.close();
-		conexao.close();
-		
+		try {	
+			rs.close();
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+            ex.printStackTrace();
+        }
 		return lista;
 	}
 }

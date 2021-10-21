@@ -10,14 +10,14 @@ import br.com.fiap.model.ProgressoUsuario;
 import br.com.fiap.model.Usuario;
 
 /**
- * Classe responsável por gravar e consultar dados relacionados a ProgressoUsuario no banco de dados
+ * Classe que grava e consulta dados relacionados a Progresso do usuário no banco de dados.
  * @author Giulio Cesar
  */
 public class ProgressoUsuarioDAO {
 	
 	/**
-	 * Método para inserir o progresso do usuário no banco de dados
-	 * @param progresso
+	 * Insere dados de um progresso do usuário no banco de dados
+	 * @param Objeto do tipo ProgressoUsuario
 	 * @throws SQLException
 	 */
 	public void insert (ProgressoUsuario progresso) throws SQLException {			
@@ -38,56 +38,82 @@ public class ProgressoUsuarioDAO {
 			stmt.execute();
 			System.out.println("Insert executado");
 		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
-			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID do progresso");
 		}
-		stmt.close();
-		conexao.close();
+		
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+            ex.printStackTrace();
+        }
 	}
 
 	/**
-	 * Método para atualizar algum registro de Progresso já existente no banco de dados, aceitando que sejam atualizados um ou mais atributos de uma única vez
-	 * @param progresso
+	 *Atualiza um registro de progresso do usuário no banco de dados	 
+	 * @param Objeto do tipo ProgressoUsuario
 	 * @throws SQLException
 	 */
 	public void update (ProgressoUsuario progresso) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"UPDATE  T_APL_PROGRESSO SET id_usuario=?, vl_sintoma=?, ds_sintoma=? where id_progresso=?");
+		try {
+			stmt.setInt(1,progresso.getUsuario().getId());
+			stmt.setInt(2,progresso.getVlSintoma());
+			stmt.setString(3,progresso.getDsSintoma());
+			stmt.setInt(4,progresso.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
+		try {
+			stmt.execute();
+			System.out.println("Update executado");			
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou atualizar um valor que não existe");
+		}
 		
-		stmt.setInt(1,progresso.getUsuario().getId());
-		stmt.setInt(2,progresso.getVlSintoma());
-		stmt.setString(3,progresso.getDsSintoma());
-		stmt.setInt(4,progresso.getId());
-		
-		stmt.execute();
-		
-		System.out.println("Update executado");
-
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
 	}
 
 	/**
-	 * Método para deletar algum registro já existente de Progresso do usuário
-	 * @param progresso
+	 * Deleta um resitro de progresso do usuário do banco de dados
+	 * @param Objeto do tipo ProgressoUsuario
 	 * @throws SQLException
 	 */
 	public void delete (ProgressoUsuario progresso) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"DELETE FROM T_APL_PROGRESSO WHERE id_progresso=?");
+		try {
+			stmt.setInt(1, progresso.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.setInt(1, progresso.getId());
-		stmt.execute();
+		try {
+			stmt.execute();
+			System.out.println("Delete executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou deletar um valor que não existe");
+		}
 		
-		System.out.println("Delete executado");
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	/**
-	 * Método que lista todos os Progressos da tabela 'T_APL_PROGRESSO'
-	 * @return Lista contendo todos os progressos de todos os usuários
+	 * Lista todos os registros de progresso do usuário no banco de dados
+	 * @return Lista com todos os progressos dos usuários no banco de dados
 	 * @throws SQLException
 	 */
 	public ArrayList<ProgressoUsuario> getProgressos() throws SQLException{
@@ -96,10 +122,14 @@ public class ProgressoUsuarioDAO {
 		Connection conexao = new ConnectionFactory().getConnection();
 		
 		PreparedStatement stmt = conexao.prepareStatement(
-				"SELECT id_progresso, id_usuario, vl_sintoma, ds_email FROM T_APL_PROGRESSO order by id_progresso");
+				"SELECT id_progresso, id_usuario, vl_sintoma, ds_sintoma FROM T_APL_PROGRESSO order by id_progresso");
 		
-		stmt.execute();
-		
+		try {
+			stmt.execute();
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro ao ler os dados, verifique se há dados.");
+		}
+			
 		ResultSet rs = stmt.getResultSet();
 		
 		while(rs.next()) {
@@ -110,14 +140,18 @@ public class ProgressoUsuarioDAO {
 			progresso.setId(rs.getInt("id_progresso"));
 			progresso.setUsuario(u);
 			progresso.setVlSintoma(rs.getInt("vl_sintoma"));
-			progresso.setDsSintoma(rs.getString("ds_email"));
+			progresso.setDsSintoma(rs.getString("ds_sintoma"));
 
 			lista.add(progresso);
 		}
 		
-		rs.close();
-		stmt.close();
-		conexao.close();
+		try {
+			rs.close();
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+			ex.printStackTrace();
+		}
 		
 		return lista;
 	}

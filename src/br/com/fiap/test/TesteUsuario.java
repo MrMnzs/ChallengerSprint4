@@ -15,7 +15,7 @@ public class TesteUsuario {
 		
 		Usuario u1 = new Usuario();
 		
-		u1.setId(11);
+		u1.setId(6);
 		u1.setNome("Caue");
 		u1.setEmail("caue@caue");		
 		u1.setDataNascimento(LocalDate.of(2000, 06, 26));
@@ -38,9 +38,9 @@ public class TesteUsuario {
 		
 //		dao.update(u1);
 		
-		u1.setId(1);
+//		u1.setId(1);
 		
-//		dao.delete(u1);
+		dao.delete(u1);
 		
 		ArrayList<Usuario> usuario = dao.getUsuarios();
 		

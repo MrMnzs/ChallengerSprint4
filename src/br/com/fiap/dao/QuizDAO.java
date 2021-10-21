@@ -12,15 +12,15 @@ import br.com.fiap.model.Quiz;
 import br.com.fiap.model.Usuario;
 
 /**
- * Classe responsável por gravar e consultar dados relacionados a Quiz no banco de dados
+ *Classe que grava e consulta dados relacionados a pergunta no banco de dados.
  * @author Giulio Cesar
  *
  */
 public class QuizDAO {
 
 	/**
-	 * Método responsável por inserir um Quiz no banco de dados, inserindo todos os seus dados.
-	 * @param quiz
+	 *Insere dados de um quiz no banco de dados.	
+	 * @param Objeto do tipo Quiz
 	 * @throws SQLException
 	 */
 	public void insert (Quiz quiz) throws SQLException {
@@ -43,16 +43,19 @@ public class QuizDAO {
 			stmt.execute();
 			System.out.println("Insert executado");
 		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
-			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID do quiz");
 		}
-		
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método que faz a atualização de um ou mais dados de Quiz no banco de dados
-	 * @param quiz
+	 * Atualiza um registro de Quiz no banco de dados
+	 * @param Objeto do tipo Quiz
 	 * @throws SQLException
 	 */
 	public void update (Quiz quiz) throws SQLException {
@@ -60,40 +63,64 @@ public class QuizDAO {
 		PreparedStatement stmt = conexao.prepareStatement(
 				"UPDATE T_APL_QUIZ SET id_usuario=?, id_progresso=?, dt_quiz=?, vl_quiz=? WHERE id_quiz=?");
 		
-		stmt.setInt(1, quiz.getUsuario().getId());
-		stmt.setInt(2, quiz.getProgresso().getId());
-		stmt.setDate(3, Date.valueOf(quiz.getData()));
-		stmt.setInt(4, quiz.getResultado());
-		stmt.setInt(5, quiz.getId());
+		try {
+			stmt.setInt(1, quiz.getUsuario().getId());
+			stmt.setInt(2, quiz.getProgresso().getId());
+			stmt.setDate(3, Date.valueOf(quiz.getData()));
+			stmt.setInt(4, quiz.getResultado());
+			stmt.setInt(5, quiz.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.execute();
+		try {
+			stmt.execute();			
+			System.out.println("Update executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou atualizar um valor que não existe no banco, verifique o ID do quiz");
+		}
 		
-		System.out.println("Update executado");
-
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método que exclui um registro de Quiz no banco de dados passando como referência o Id do Quiz
-	 * @param quiz
+	 * Deleta um resitro de pergunta do banco de dados.
+	 * @param Objeto do tipo Quiz
 	 * @throws SQLException
 	 */
 	public void delete (Quiz quiz) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"DELETE FROM T_APL_QUIZ WHERE id_quiz=?");
-		stmt.setInt(1, quiz.getId());
-		stmt.execute();
 		
-		System.out.println("Delete executado");
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.setInt(1, quiz.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
+		try {
+			stmt.execute();
+			System.out.println("Delete executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou excluir um valor que não existe no banco, verifique o ID do quiz");
+		}
+		
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método responsável por listar todos os Quiz existente no banco de dados
-	 * @return Lista com todos os Quiz cadastrados no banco de dados
+	 * Lista todos os registros de Quiz no banco de dados.
+	 * @return Lista com todos os Quiz cadastrados no banco de dados.
 	 * @throws SQLException
 	 */
 	public ArrayList<Quiz> getQuiz() throws SQLException{
@@ -102,7 +129,11 @@ public class QuizDAO {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"SELECT id_quiz, id_usuario, id_progresso, dt_quiz, vl_quiz FROM T_APL_QUIZ ORDER BY id_quiz");
-		stmt.execute();
+		try {
+			stmt.execute();			
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro ao ler os dados, verifique se há dados.");
+		}
 		
 		ResultSet rs = stmt.getResultSet();
 		
@@ -114,65 +145,24 @@ public class QuizDAO {
 			Usuario u = new Usuario();
 			u.setId(rs.getInt("id_usuario"));
 			quiz.setUsuario(u);
-			
-			
+				
 			ProgressoUsuario p = new ProgressoUsuario();
 			p.setId(rs.getInt("id_progresso"));
 			quiz.setProgresso(p);
 			
 			quiz.setData(rs.getDate(4).toLocalDate());
-			
-			
+				
 			lista.add(quiz);
 		}
 		
-		
-		rs.close();
-		stmt.close();
-		conexao.close();
-		
+		try {
+			rs.close();
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
+			
 		return lista;
 	}
-	
-//	/**
-//	 * Método responsável por listar todos os progressos de um usuário com base nas suas respostas
-//	 * @param Usuário
-//	 * @return Lista com todos os pontos que um único usuário fez
-//	 * @throws SQLException
-//	 */
-//	public ArrayList<Quiz> getPontuacao(Usuario u) throws SQLException{
-//		ArrayList<Quiz> lista = new ArrayList<>();
-//		Connection conexao = new ConnectionFactory().getConnection();
-//		PreparedStatement stmt = conexao.prepareStatement(
-//				"SELECT NM_USUARIO, ID_USUARIO, ID_QUIZ, VL_QUIZ FROM T_APL_QUIZ INNER JOIN T_APL_USUARIO ON (ID_USUARIO = ID_USUARIO) WHERE ID_USUARIO=?");
-//		stmt.setInt(1, u.getId());
-//		stmt.execute();
-//	
-//		ResultSet rs = stmt.getResultSet();
-//		
-//		while(rs.next()) {
-//
-//			Quiz quiz = new Quiz();
-//			
-//			u.setNome(rs.getString("NM_USUARIO"));
-//			u.setId(rs.getInt("ID_USUARIO"));
-//			
-//			ProgressoUsuario p = new ProgressoUsuario();
-//			p.setId(rs.getInt("VL_QUIZ"));
-//			quiz.setProgresso(p);			
-//			quiz.setUsuario(u);
-//			
-//			quiz.setId(rs.getInt("id_quiz"));
-//			quiz.setResultado(rs.getInt("vl_quiz"));
-//			
-//			lista.add(quiz);
-//
-//		}
-//		
-//		rs.close();
-//		stmt.close();
-//		conexao.close();
-//		
-//		return lista;
-//	}
 }

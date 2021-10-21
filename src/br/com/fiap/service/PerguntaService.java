@@ -2,7 +2,6 @@ package br.com.fiap.service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import br.com.fiap.dao.PerguntaDAO;
 import br.com.fiap.model.Pergunta;
 
@@ -14,10 +13,12 @@ public class PerguntaService {
 	}
 	
 	/**
-	 * Método que insere uma pergunta no banco de dados. Esse método recebe uma pergunta da classe Controller.
-	 * Esse método valida se a o ID da pergunta ou o texto da pergunta já existe no banco de dados e também verifica se o número do ID e o número da pergunta estão entre 1 e 999,
-	 * caso não exista e caso o número de ID e pergunta estejam corretos de acordo com a regra de negócio, o método chama a classe
-	 * PerguntaDAO para utilizar o método 'insert'.
+	 * Insere uma pergunta no banco de dados. 
+	 * Recebe uma pergunta da classe Controller.
+	 * Valida se o ID da pergunta ou o texto da pergunta já existem no banco de dados
+	 * Verifica se o número do ID e o número da pergunta estão entre 1 e 999.
+	 * Se o ID e o texto não estiverem cadastrados e caso o ID e o número da pergunta estejam de acordo com a regra
+	 * Chama o método 'insert' da classe PerguntaDAO caso o ID e o texto não estiverem cadastrados e caso o ID e o número da pergunta estejam de acordo com a regra.
 	 * @param Objeto do tipo pergunta
 	 * @throws SQLException
 	 */
@@ -54,15 +55,19 @@ public class PerguntaService {
 	public void atualizar(Pergunta p) throws SQLException{
 		ArrayList<Pergunta> pergunta = dao.getPerguntas();
 		ArrayList<String> listaDsPergunta = new ArrayList<String>();
+		ArrayList<Integer> listaIdPergunta = new ArrayList<Integer>();
 		
 		for(Pergunta p1 : pergunta) {
 			listaDsPergunta.add(p1.getDsPergunta());
+			listaIdPergunta.add(p1.getId());
 		}
 		
 		if(p.getNrPergunta() < 1 || p.getNrPergunta() > 999){
 			System.out.println("O número da pergunta deve esaaaaaaatar entre 1 e 999");
 		}else if(listaDsPergunta.contains(p.getDsPergunta())) {
 			System.out.println("A descrição que você está tentando atualizar já existe em outra pergunta no banco");
+		}else if(!listaIdPergunta.contains(p.getId())) {
+			System.out.println("Só é possível atualizar uma pergunta já existente no banco de dados");
 		}else {
 			dao.update(p);			
 		}
@@ -87,5 +92,22 @@ public class PerguntaService {
 		}else {
 			dao.delete(p);			
 		}
+	}	
+	
+	/**
+	 * Lista todos os dados da tabela pergunta e os printa na tela de maneira visual
+	 */
+	public void listar() {
+		try {
+			ArrayList<Pergunta> pergunta = dao.getPerguntas();
+			for(Pergunta p : pergunta) {
+				System.out.println("Id Pergunta: " + p.getId());
+				System.out.println("Número da Pergunta: " + p.getNrPergunta());
+				System.out.println("Texto da Pergunta: " + p.getDsPergunta());
+				System.out.println("------------------");			
+			}			
+		}catch(SQLException e) {
+			System.out.println("SQL Exception: houve um erro ao buscar os dados, verifique se a tabela contém dados");
+	}
 	}
 }

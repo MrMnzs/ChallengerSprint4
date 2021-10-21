@@ -10,15 +10,15 @@ import br.com.fiap.connection.ConnectionFactory;
 import br.com.fiap.model.Usuario;
 
 /**
- * Classe responsável por gravar e consultar dados relacionados a Usuario no banco de dados
- * @author Giulio Cesar
+ * Classe que grava e consulta dados relacionados a Usuario no banco de dados. 
+ * * @author Giulio Cesar
  *
  */
 public class UsuarioDAO {
 	
 	/**
-	 * Método utilizado para inserir um usuário no banco de dados
-	 * @param usuario
+	 * Insere dados de um usuário no banco de dados.
+	 * @param Objeto do tipo usuário
 	 * @throws SQLException
 	 */
 	public void insert (Usuario usuario) throws SQLException {
@@ -44,60 +44,95 @@ public class UsuarioDAO {
 			stmt.execute();
 			System.out.println("Insert executado");
 		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
-			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID");
 		}
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método utilizado para atualizar um cadastro já existente de um usuário
-	 * @param usuario
+	 * Atualiza um registro de usuário no banco de dados.
+	 * @param Objeto do tipo usuário
 	 * @throws SQLException
 	 */
 	public void update (Usuario usuario) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"UPDATE T_APL_USUARIO SET nm_usuario=?, ds_email=?, dt_nascimento=?, ds_senha=?, ds_genero=?, ds_estado_civil=?, ds_estado_uf=? where id_usuario=?");
+		try {
+			stmt.setString(1, usuario.getNome());
+			stmt.setString(2, usuario.getEmail());
+			stmt.setDate(3, Date.valueOf(usuario.getDataNascimento()));
+			stmt.setString(4, usuario.getSenha());
+			stmt.setString(5, usuario.getGenero());
+			stmt.setString(6, usuario.getEstadoCivil());
+			stmt.setString(7, usuario.getEstadoUf());
+			stmt.setInt(8, usuario.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.setString(1, usuario.getNome());
-		stmt.setString(2, usuario.getEmail());
-		stmt.setDate(3, Date.valueOf(usuario.getDataNascimento()));
-		stmt.setString(4, usuario.getSenha());
-		stmt.setString(5, usuario.getGenero());
-		stmt.setString(6, usuario.getEstadoCivil());
-		stmt.setString(7, usuario.getEstadoUf());
-		stmt.setInt(8, usuario.getId());
-		
-		stmt.execute();
-		
-		System.out.println("Update executado");
+		try {
+			stmt.execute();			
+			System.out.println("Update executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou atualizar um valor que não existe no banco");
+		}
 
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método utilizado para deletar um usário existente no banco de dados
-	 * @param usuario
+	 * Deleta um registro de usuario do banco de dados.
+	 * @param Objeto do tipo usuário
 	 * @throws SQLException
 	 */
 	public void delete (Usuario usuario) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
-		PreparedStatement stmt = conexao.prepareStatement(
+		
+		
+		PreparedStatement stmt1 = conexao.prepareStatement(
+				"DELETE FROM T_APL_QUIZ WHERE id_usuario=?");
+				
+		PreparedStatement stmt2 = conexao.prepareStatement(
 				"DELETE FROM T_APL_USUARIO WHERE id_usuario=?");
 		
-		stmt.setInt(1, usuario.getId());
-		stmt.execute();
+		try {
+			stmt1.setInt(1, usuario.getId());
+			stmt2.setInt(1, usuario.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		System.out.println("Delete executado");
-		stmt.close();
-		conexao.close();
+		try {
+			stmt1.execute();
+			stmt2.execute();
+			System.out.println("Delete executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou deletar um valor que não existe no banco");
+		}
+		
+		try {
+			stmt1.close();
+			stmt2.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método utilizado para listar todos os usuários existentes no banco de dados
-	 * @return Objeto Lista contendo todos os dados dos usuários cadastrados no banco de dados
+	 * Lista todos os registros de pergunta no banco de dados.
+	 * @return Lista com todos os usuários no banco de dados
 	 * @throws SQLException
 	 */
 	public ArrayList<Usuario> getUsuarios() throws SQLException{
@@ -107,8 +142,11 @@ public class UsuarioDAO {
 		
 		PreparedStatement stmt = conexao.prepareStatement(
 				"SELECT id_usuario, nm_usuario, ds_email, dt_nascimento, ds_senha, ds_genero, ds_estado_civil, ds_estado_uf FROM T_APL_USUARIO order by id_usuario");
-		
-		stmt.execute();
+		try {
+			stmt.execute();			
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro ao listar os dados. Verifique se há dados");
+		}
 		
 		ResultSet rs = stmt.getResultSet();
 		
@@ -126,13 +164,14 @@ public class UsuarioDAO {
 			
 			lista.add(usuario);
 		}
-		
-		System.out.println(lista);
-		
-		
-		rs.close();
-		stmt.close();
-		conexao.close();
+				
+		try {
+			rs.close();
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 		
 		return lista;
 	}

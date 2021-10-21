@@ -55,24 +55,24 @@ public class TesteQuiz {
 		
 		//teste para update
 		q1.setData(LocalDate.of(2021, 10, 10));
-		q1.setId(22);
+		q1.setId(7);
 		q1.setProgresso(prog1);
 		q1.setResultado(45);
 		q1.setUsuario(u1);
 		
 		//dao.insert(q1);
 		//dao.update(q1);
-		//dao.delete(q1);
+		dao.delete(q1);
 		
-		ArrayList<Quiz> quiz = dao.getQuiz();
-		for(Quiz q: quiz) {
-			System.out.println(q.getId());
-			System.out.println(q.getUsuario());
-			System.out.println(q.getProgresso());
-			System.out.println(q.getData());
-			System.out.println(q.getResultado());
-			System.out.println("_________________");
-		}
+//		ArrayList<Quiz> quiz = dao.getQuiz();
+//		for(Quiz q: quiz) {
+//			System.out.println(q.getId());
+//			System.out.println(q.getUsuario());
+//			System.out.println(q.getProgresso());
+//			System.out.println(q.getData());
+//			System.out.println(q.getResultado());
+//			System.out.println("_________________");
+//		}
 
 		
 //		ArrayList<Quiz> valores = dao.getPontuacao(u1);

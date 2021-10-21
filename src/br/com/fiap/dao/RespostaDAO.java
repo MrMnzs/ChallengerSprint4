@@ -9,15 +9,15 @@ import br.com.fiap.connection.ConnectionFactory;
 import br.com.fiap.model.Resposta;
 
 /**
- * Classe responsável por gravar e consultar dados relacionados a Resposta no banco de dados
+ * Classe que grava e consulta dados relacionados a pergunta no banco de dados.
  * @author Giulio Cesar
  *
  */
 public class RespostaDAO {
 	
 	/**
-	 * Método responsável por inserir uma Resposta no banco de dados na tabela Resposta
-	 * @param resposta
+	 * Insere dados de uma resposta no banco de dados.
+	 * @param Objeto do tipo Resposta
 	 * @throws SQLException
 	 */
 	public void insert (Resposta resposta) throws SQLException {			
@@ -36,15 +36,20 @@ public class RespostaDAO {
 			stmt.execute();
 			System.out.println("Insert executado");
 		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
-			System.out.println("Você tentou inserir um valor que já existe no banco, verifique o ID e o texto da pergunta");
+			System.out.println("Você tentou inserir uma resposta que já existe");
 		}
-		stmt.close();
-		conexao.close();
+		
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método que atualiza uma resposta já existente no banco de dados.
-	 * @param resposta
+	 * Atualiza um registro de resposta no banco de dados.
+	 * @param Objeto do tipo Resposta
 	 * @throws SQLException
 	 */
 	public void update (Resposta resposta) throws SQLException {
@@ -52,39 +57,61 @@ public class RespostaDAO {
 		PreparedStatement stmt = conexao.prepareStatement(
 				"UPDATE  T_APL_RESPOSTA SET nr_resposta=?, ds_resposta=? where id_resposta=?");
 		
-		stmt.setInt(1, resposta.getNrResposta());
-		stmt.setString(2, resposta.getDsResposta());
-		stmt.setInt(3, resposta.getId());
-
-		stmt.execute();
+		try {
+			stmt.setInt(1, resposta.getNrResposta());
+			stmt.setString(2, resposta.getDsResposta());
+			stmt.setInt(3, resposta.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		System.out.println("Update executado");
-
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.execute();			
+			System.out.println("Update executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou atualizar uma resposta que não existe");
+		}
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
-	 * Método que deleda uma pergunta existente no banco de dados referente ao ID passado
-	 * @param resposta
+	 * Deleta um registro de resposta no banco de dados.
+	 * @param Objeto do tipo Resposta
 	 * @throws SQLException
 	 */
 	public void delete (Resposta resposta) throws SQLException {
 		Connection conexao = new ConnectionFactory().getConnection();
 		PreparedStatement stmt = conexao.prepareStatement(
 				"DELETE FROM T_APL_RESPOSTA WHERE id_resposta=?");
+		try {
+			stmt.setInt(1, resposta.getId());
+		}catch(NullPointerException e){
+	        System.out.print("NullPointerException caught");
+	    }
 		
-		stmt.setInt(1, resposta.getId());
-		stmt.execute();
+		try {
+			stmt.execute();
+			System.out.println("Delete executado");
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Você tentou deletar uma resposta que não existe");
+		}
 		
-		System.out.println("Delete executado");
-		stmt.close();
-		conexao.close();
+		try {
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 	}
 
 	/**
-	 * Método que lista todas as respostas existentes no banco de dados
-	 * @return Objeto Lista contendo todas as respostas no banco de dados
+	 * Lista todos os registros de resposta no banco de dados.
+	 * @return Lista com todas as respostas no banco de dados.
 	 * @throws SQLException
 	 */
 	public ArrayList<Resposta> getRespostas() throws SQLException{
@@ -94,9 +121,11 @@ public class RespostaDAO {
 		
 		PreparedStatement stmt = conexao.prepareStatement(
 				"SELECT id_respostas, nr_respostas, ds_respostas FROM T_APL_RESPOSTAS order by id_respostas");
-		
-		stmt.execute();
-		
+		try {
+			stmt.execute();
+		}catch(java.sql.SQLIntegrityConstraintViolationException e) {
+			System.out.println("Houve um erro ao ler os dados. Verifique se há dados");
+		}
 		ResultSet rs = stmt.getResultSet();
 		
 		while(rs.next()) {
@@ -110,9 +139,13 @@ public class RespostaDAO {
 		
 		System.out.println(lista);	
 		
-		rs.close();
-		stmt.close();
-		conexao.close();
+		try {
+			rs.close();
+			stmt.close();
+			conexao.close();
+		}catch(SQLException ex){
+	        ex.printStackTrace();
+	    }
 		
 		return lista;
 	}
