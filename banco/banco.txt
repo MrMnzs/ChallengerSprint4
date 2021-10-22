@@ -1,0 +1,217 @@
+--Comandos DDL
+/*
+DROP TABLE t_apl_respostas CASCADE CONSTRAINTS;
+DROP TABLE t_apl_perguntas CASCADE CONSTRAINTS;
+DROP TABLE t_apl_progresso CASCADE CONSTRAINTS;
+DROP TABLE t_apl_quiz CASCADE CONSTRAINTS;
+DROP TABLE t_apl_usuario CASCADE CONSTRAINTS;
+*/
+
+CREATE TABLE t_apl_usuario (
+    id_usuario      NUMBER(5) NOT NULL,
+    nm_usuario      VARCHAR2(40) NOT NULL,
+    ds_email        VARCHAR2(40) NOT NULL,
+    dt_nascimento   DATE NOT NULL,
+    ds_senha        VARCHAR2(12) NOT NULL,
+    ds_genero       CHAR(2) NOT NULL,
+    ds_estado_civil VARCHAR2(15) NULL,
+    ds_estado_uf    CHAR(2)
+);
+
+CREATE TABLE t_apl_respostas (
+    id_respostas NUMBER(1) NOT NULL,
+        nr_respostas NUMBER(1) NOT NULL,
+        ds_respostas VARCHAR2(15) NOT NULL
+        
+);
+
+CREATE TABLE t_apl_perguntas (
+    id_perguntas NUMBER(3) NOT NULL,
+    id_respostas NUMBER(3) NOT NULL,
+    id_quiz NUMBER(3) NOT NULL,
+    nr_perguntas NUMBER(3) NOT NULL,
+    ds_perguntas VARCHAR2(200) NOT NULL
+);
+
+CREATE TABLE t_apl_progresso (
+    id_progresso NUMBER(6) NOT NULL,
+    id_usuario   NUMBER(5) NOT NULL,
+    vl_sintoma   NUMBER(3) NOT NULL,
+    ds_sintoma   VARCHAR2(100) NOT NULL
+);
+
+CREATE TABLE t_apl_quiz (
+    id_quiz      NUMBER(3) NOT NULL,
+    id_usuario   NUMBER(5) NOT NULL,
+    id_progresso NUMBER(6) NOT NULL,
+    dt_quiz      DATE NOT NULL,
+    vl_quiz      NUMBER(3) NOT NULL
+);
+    
+ALTER TABLE t_apl_perguntas 
+    ADD CONSTRAINT pk_apl_perguntas 
+PRIMARY KEY ( id_perguntas );
+
+ALTER TABLE t_apl_progresso 
+    ADD CONSTRAINT pk_apl_progresso 
+PRIMARY KEY ( id_progresso );
+
+ALTER TABLE t_apl_quiz 
+    ADD CONSTRAINT pk_apl_quiz 
+PRIMARY KEY ( id_quiz );
+
+ALTER TABLE t_apl_respostas 
+    ADD CONSTRAINT pk_apl_respostas 
+PRIMARY KEY ( id_respostas );
+
+ALTER TABLE t_apl_usuario 
+    ADD CONSTRAINT pk_apl_usuario 
+PRIMARY KEY ( id_usuario );
+ 
+ALTER TABLE t_apl_perguntas 
+    ADD CONSTRAINT un_apl_perguntas_perguntas 
+UNIQUE ( ds_perguntas );
+
+ALTER TABLE t_apl_usuario 
+    ADD CONSTRAINT un_apl_usuario 
+UNIQUE ( ds_email );
+  
+ALTER TABLE t_apl_usuario
+    ADD CONSTRAINT ck_apl_usuario_genero 
+    CHECK ( upper(ds_genero) = 'H'
+            OR upper(ds_genero) = 'M'
+            OR upper(ds_genero) = 'NB'
+            OR lower(ds_genero) = 'h'
+            OR lower(ds_genero) = 'm'
+            OR lower(ds_genero) = 'nb' );
+
+ALTER TABLE t_apl_perguntas
+    ADD CONSTRAINT fk_apl_perguntas_respostas 
+    FOREIGN KEY ( id_respostas )
+        REFERENCES t_apl_respostas ( id_respostas )
+        ON DELETE CASCADE ;
+        
+ALTER TABLE t_apl_perguntas 
+    ADD CONSTRAINT fk_apl_perguntas_quiz
+    FOREIGN KEY (id_quiz)
+        REFERENCES t_apl_quiz (id_quiz)
+        ON DELETE CASCADE ;
+
+ALTER TABLE t_apl_progresso
+    ADD CONSTRAINT fk_apl_progresso_usuario 
+    FOREIGN KEY ( id_usuario )
+        REFERENCES t_apl_usuario ( id_usuario )
+        ON DELETE CASCADE ;
+
+ALTER TABLE t_apl_quiz
+    ADD CONSTRAINT fk_apl_quiz_progresso 
+    FOREIGN KEY ( id_progresso )
+        REFERENCES t_apl_progresso ( id_progresso )
+        ON DELETE CASCADE ;
+
+ALTER TABLE t_apl_quiz
+    ADD CONSTRAINT fk_apl_quiz_usuario 
+    FOREIGN KEY ( id_usuario )
+        REFERENCES t_apl_usuario ( id_usuario )
+        ON DELETE CASCADE ;
+        
+COMMIT;
+
+
+--Comandos DML
+
+/*
+DELETE FROM T_APL_PERGUNTAS;
+DELETE FROM T_APL_RESPOSTAS;
+DELETE FROM T_APL_QUIZ;
+DELETE FROM T_APL_PROGRESSO;
+DELETE FROM T_APL_USUARIO;
+*/
+
+-- INSERT DADOS NA TABELA USUARIO
+insert into T_APL_USUARIO  values (1, 'Imojean Alloisi', 'ialloisi0@geocities.com',  TO_DATE('04/10/1998','DD/MM/YYYY'),'Imojean123', 'H', 'solteiro(a)','SP');
+insert into T_APL_USUARIO  values (2, 'Maxine Draye', 'mdraye1@whitehouse.gov', TO_DATE('15/01/1997','DD/MM/YYYY'),'Maxine123', 'M', 'solteiro(a)', 'RJ');
+insert into T_APL_USUARIO  values (3, 'Cathee Kollatsch', 'ckollatsch2@ft.com', TO_DATE('15/12/1992','DD/MM/YYYY'),'Cathee123' ,'NB', 'casado(a)', 'BA');
+insert into T_APL_USUARIO  values (4, 'Layla Tothacot', 'ltothacot3@psu.edu', TO_DATE('11/10/1993','DD/MM/YYYY'),'Layla123', 'M', 'divorciado(a)', 'MG');
+insert into T_APL_USUARIO  values (5, 'Rainer Ziemecki', 'rziemecki4@pen.io', TO_DATE('09/08/1999','DD/MM/YYYY'),'Rainer123', 'M', 'viuvo(a)', 'PR');
+insert into T_APL_USUARIO  values (6, 'Ted Venditto', 'tvenditto6@spiegel.de', TO_DATE('19/10/2000','DD/MM/YYYY'),'Ted123','H','casado(a)', 'GO');
+insert into T_APL_USUARIO  values (7, 'Humbert Bruneau', 'hbruneau6@abc.net.au', TO_DATE('21/03/2005','DD/MM/YYYY'),'Humbert123', 'H', 'solteiro(a)', 'MA');
+insert into T_APL_USUARIO  values (8, 'Morey Carefull', 'mcarefull7@npr.org', TO_DATE('30/05/2004','DD/MM/YYYY'),'Morey123', 'M', 'solteiro(a)', 'RS');
+insert into T_APL_USUARIO  values (9, 'Aldous Leefe', 'aleefe8@example.com', TO_DATE('05/09/2002','DD/MM/YYYY'),'Aldous123', 'NB', 'solteiro(a)', 'SP');
+insert into T_APL_USUARIO  values (10, 'Aidan Curle', 'acurle9@latimes.com', TO_DATE('09/04/2001','DD/MM/YYYY'), 'Aidan123','H', 'solteiro(a)', 'SP');
+
+-- INSERT DADOS NA TABELA PROGRESSO
+INSERT INTO T_APL_PROGRESSO VALUES(1,1,90,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(2,3,30,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(3,4,85,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(4,5,15,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(5,3,75,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(6,7,10,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(7,8,88,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(8,9,12,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(9,2,95,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(10,9,29,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(11,10,99,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(12,4,20,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(13,7,100,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(14,9,33,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(15,5,89,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(16,7,14,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(17,3,93,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(18,2,11,'Niveis de ansiedade baixa');
+INSERT INTO T_APL_PROGRESSO VALUES(19,6,84,'Niveis de ansiedade alta');
+INSERT INTO T_APL_PROGRESSO VALUES(20,6,19,'Niveis de ansiedade baixa');
+
+-- INSERT DADOS NA TABELA RESPOSTA
+INSERT INTO T_APL_RESPOSTAS VALUES( 1, 1,'nunca');
+INSERT INTO T_APL_RESPOSTAS VALUES( 2, 2,'quase nunca');
+INSERT INTO T_APL_RESPOSTAS VALUES( 3, 3,'as vezes');
+INSERT INTO T_APL_RESPOSTAS VALUES( 4, 4,'quase sempre');
+INSERT INTO T_APL_RESPOSTAS VALUES( 5, 5,'sempre');
+
+-- INSERT DADOS NA TABELA QUIZ
+INSERT INTO T_APL_QUIZ VALUES(1, 1, 1, to_date('12/05/2015','dd/mm/yyyy'),'52');
+INSERT INTO T_APL_QUIZ VALUES(2, 2, 2, to_date('12/05/2015','dd/mm/yyyy'),'70');
+INSERT INTO T_APL_QUIZ VALUES(3, 3, 3, to_date('12/05/2015','dd/mm/yyyy'),'60');
+INSERT INTO T_APL_QUIZ VALUES(4, 4, 4, to_date('12/05/2015','dd/mm/yyyy'),'152');
+INSERT INTO T_APL_QUIZ VALUES(5, 5, 5, to_date('12/05/2015','dd/mm/yyyy'),'152');
+INSERT INTO T_APL_QUIZ VALUES(6, 6, 6, to_date('12/05/2015','dd/mm/yyyy'),'100');
+INSERT INTO T_APL_QUIZ VALUES(7, 1, 1, to_date('12/05/2015','dd/mm/yyyy'),'99');
+INSERT INTO T_APL_QUIZ VALUES(8, 2, 2, to_date('12/05/2015','dd/mm/yyyy'),'152');
+INSERT INTO T_APL_QUIZ VALUES(9, 3, 3, to_date('12/05/2015','dd/mm/yyyy'),'98');
+INSERT INTO T_APL_QUIZ VALUES(10, 4, 4, to_date('12/05/2015','dd/mm/yyyy'),'15');
+INSERT INTO T_APL_QUIZ VALUES(11, 5, 5, to_date('12/05/2015','dd/mm/yyyy'),'12');
+INSERT INTO T_APL_QUIZ VALUES(12, 6, 6, to_date('12/05/2015','dd/mm/yyyy'),'152');
+INSERT INTO T_APL_QUIZ VALUES(13, 5, 5, to_date('12/05/2015','dd/mm/yyyy'),'152');
+INSERT INTO T_APL_QUIZ VALUES(14, 6, 6, to_date('12/05/2015','dd/mm/yyyy'),'100');
+INSERT INTO T_APL_QUIZ VALUES(15, 1, 1, to_date('12/05/2015','dd/mm/yyyy'),'99');
+INSERT INTO T_APL_QUIZ VALUES(16, 2, 2, to_date('12/05/2015','dd/mm/yyyy'),'152');
+INSERT INTO T_APL_QUIZ VALUES(17, 3, 3, to_date('12/05/2015','dd/mm/yyyy'),'98');
+INSERT INTO T_APL_QUIZ VALUES(18, 4, 4, to_date('12/05/2015','dd/mm/yyyy'),'15');
+INSERT INTO T_APL_QUIZ VALUES(19, 5, 5, to_date('12/05/2015','dd/mm/yyyy'),'12');
+INSERT INTO T_APL_QUIZ VALUES(20, 6, 6, to_date('12/05/2015','dd/mm/yyyy'),'152');
+
+
+-- INSERT DADOS NA TABELA PERGUNTAS
+INSERT INTO T_APL_PERGUNTAS values (1, 1, 1, 1, 'Se não tenho tempo de fazer tudo, me preocupo.');
+INSERT INTO T_APL_PERGUNTAS values (2, 2, 2, 2, 'Minhas preocupações me oprimem.');
+INSERT INTO T_APL_PERGUNTAS values (3, 3, 3, 3, 'Tendo a me preocupar com as coisas.');
+INSERT INTO T_APL_PERGUNTAS values (4, 4, 4, 4, 'Muitas situações me causam muita preocupação.');
+INSERT INTO T_APL_PERGUNTAS values (5, 5, 5, 5, 'Sei que não deveria me preocupar com as coisas, mas simplesmente não consigo evitar.');
+INSERT INTO T_APL_PERGUNTAS values (6, 4, 6, 6, 'Quando estou sob pressão, fico muito preocupado');
+INSERT INTO T_APL_PERGUNTAS values (7, 5, 7, 7, 'Estou sempre preocupado com alguma coisa.');
+INSERT INTO T_APL_PERGUNTAS values (8, 2, 8, 8, 'Não tenho facilidade para me desligar das minhas preocupações.');
+INSERT INTO T_APL_PERGUNTAS values (9, 3, 1, 9, 'Assim que termino uma tarefa, começo a me preocupar com outra coisa.');
+INSERT INTO T_APL_PERGUNTAS values (10,1, 2, 10, 'Sempre me preocupo com tudo..');
+INSERT INTO T_APL_PERGUNTAS values (11,2, 3, 11, 'Enquanto há a possibilidade de fazer algo a respeito de um problema não paro de me preocupar.');
+INSERT INTO T_APL_PERGUNTAS values (12,3, 4, 12, 'Sempre fui uma pessoa Ansiosa.');
+INSERT INTO T_APL_PERGUNTAS values (13,5, 5, 13, 'Percebo que tendo muitas preocupações ');
+INSERT INTO T_APL_PERGUNTAS values (14,4, 6, 14, 'Quando começo a me preocupar não consigo para');
+INSERT INTO T_APL_PERGUNTAS values (15,5, 7, 15, 'Estou o tempo todo preocupado');
+INSERT INTO T_APL_PERGUNTAS values (16,3, 8, 16, 'Eu me preocupo com os projetos até que eles tenham terminado.');
+INSERT INTO T_APL_PERGUNTAS values (17,5, 5, 17, 'Com qual frenquencia me mantive isolado durante a pandemia');
+INSERT INTO T_APL_PERGUNTAS values (18,4, 6, 18, 'Ficou chateado por causa de algo que aconteceu de forma inesperada?');
+INSERT INTO T_APL_PERGUNTAS values (19,2, 7, 19, 'Sentiu-se nervoso ou estressado?');
+INSERT INTO T_APL_PERGUNTAS values (20,1, 8, 20, 'Durante o meu isolamento tive contato com outras pessoas?');
+
+commit;
