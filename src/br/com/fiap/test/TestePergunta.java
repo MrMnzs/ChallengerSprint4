@@ -1,8 +1,6 @@
 package br.com.fiap.test;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import br.com.fiap.dao.PerguntaDAO;
 import br.com.fiap.model.Pergunta;
 import br.com.fiap.model.Quiz;
 import br.com.fiap.model.Resposta;

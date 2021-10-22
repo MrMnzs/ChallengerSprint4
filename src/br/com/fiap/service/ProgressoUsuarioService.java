@@ -92,7 +92,10 @@ public class ProgressoUsuarioService {
 		}
 	}	
 	
-	public void lista() {
+	/**
+	 * Lista todos os registros de Progresso do banco de dados de maneira personalizada para visualização.
+	 */
+	public void listar() {
 		try {
 			ArrayList<ProgressoUsuario> progresso = dao.getProgressos();
 			for(ProgressoUsuario p : progresso) {
