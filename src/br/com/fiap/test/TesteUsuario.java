@@ -26,7 +26,6 @@ public class TesteUsuario {
 								
 //		dao.insert(u1);
 		
-		
 		u1.setNome("Andrézão");
 		u1.setEmail("andrazao@andrazao");		
 		u1.setDataNascimento(LocalDate.of(2008, 06, 26));
@@ -54,6 +53,5 @@ public class TesteUsuario {
 			System.out.println(u.getEstadoUf());
 			System.out.println("_________________");
 		}
-
 	}
 }

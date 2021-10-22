@@ -141,7 +141,6 @@ public class PerguntaDAO {
 			lista.add(pergunta);
 		}
 		
-		//System.out.println(lista);
 		try {	
 			rs.close();
 			stmt.close();

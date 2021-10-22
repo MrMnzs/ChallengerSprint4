@@ -23,5 +23,4 @@ public class Resposta {
 	public void setDsResposta(String dsResposta) {
 		this.dsResposta = dsResposta;
 	}
-
 }

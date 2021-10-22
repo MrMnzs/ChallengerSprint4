@@ -6,7 +6,6 @@ import br.com.fiap.model.Quiz;
 import br.com.fiap.model.Resposta;
 import br.com.fiap.service.PerguntaService;
 
-
 public class TestePergunta {
 
 	public static void main(String[] args) throws SQLException {
@@ -41,5 +40,4 @@ public class TestePergunta {
 		PerguntaService ps = new PerguntaService();
 		ps.listar();
 	}
-
 }

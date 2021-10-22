@@ -5,9 +5,17 @@ import java.util.ArrayList;
 import br.com.fiap.dao.RespostaDAO;
 import br.com.fiap.model.Resposta;
 
+/**
+ * Utiliza métodos da DAO para fazer validações ao enviar e receber dados da resposta no banco de dados
+ * @author giulio
+ *
+ */
 public class RespostaService {
 	private RespostaDAO dao;
 	
+	/**
+	 * Construtor para iniciar objeto dao sempre que a classe for instanciada em um objeto
+	 */
 	public RespostaService() {
 		dao = new RespostaDAO();
 	}

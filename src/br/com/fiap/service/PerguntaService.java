@@ -5,9 +5,16 @@ import java.util.ArrayList;
 import br.com.fiap.dao.PerguntaDAO;
 import br.com.fiap.model.Pergunta;
 
+/**
+ * Utiliza métodos da DAO para fazer validações ao enviar e receber dados da pergunta no banco de dados,
+ * @author giulio
+ */
 public class PerguntaService {
 	private PerguntaDAO dao;
 	
+	/**
+	 * Construtor para iniciar objeto dao sempre que a classe for instanciada em um objeto
+	 */
 	public PerguntaService() {
 		dao = new PerguntaDAO();
 	}
@@ -108,6 +115,6 @@ public class PerguntaService {
 			}			
 		}catch(SQLException e) {
 			System.out.println("SQL Exception: houve um erro ao buscar os dados, verifique se a tabela contém dados");
-	}
+		}
 	}
 }

@@ -15,7 +15,6 @@ public class TesteQuiz {
 		Quiz q1 = new Quiz();
 		QuizDAO dao = new QuizDAO();
 		
-		
 		Resposta r1 = new Resposta();
 		r1.setDsResposta("Muito");
 		r1.setId(1);
@@ -45,7 +44,6 @@ public class TesteQuiz {
 		u1.setEstadoCivil("Solteiro");
 		u1.setEstadoUf("SP");	
 		
-		
 		q1.setData(LocalDate.of(2021, 10, 01));
 		q1.setId(22);
 		q1.setProgresso(prog1);
@@ -62,27 +60,5 @@ public class TesteQuiz {
 		//dao.insert(q1);
 		//dao.update(q1);
 		dao.delete(q1);
-		
-//		ArrayList<Quiz> quiz = dao.getQuiz();
-//		for(Quiz q: quiz) {
-//			System.out.println(q.getId());
-//			System.out.println(q.getUsuario());
-//			System.out.println(q.getProgresso());
-//			System.out.println(q.getData());
-//			System.out.println(q.getResultado());
-//			System.out.println("_________________");
-//		}
-
-		
-//		ArrayList<Quiz> valores = dao.getPontuacao(u1);
-//		Quiz qpont = new Quiz();
-//		qpont.setUsuario(u1);
-//		for(int i=0; i < valores.size(); i++) {
-//			System.out.println("Nome: "+qpont.getUsuario().getNome());
-//			System.out.println("Id usuário: " + qpont.getUsuario().getId());
-//			System.out.println("Id quiz: " + qpont.getId());
-//			System.out.println("Pontuação quiz: " + qpont.getResultado());
-//			System.out.println("-----------------------------------");
-//		}
 	}
 }
