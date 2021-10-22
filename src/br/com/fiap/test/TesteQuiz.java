@@ -2,7 +2,6 @@ package br.com.fiap.test;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import br.com.fiap.dao.QuizDAO;
 import br.com.fiap.model.Pergunta;

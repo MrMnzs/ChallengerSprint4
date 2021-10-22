@@ -83,6 +83,22 @@ public class RespostaService {
 		}else {
 			dao.delete(r);			
 		}
-		
+	}
+	
+	/**
+	 * Lista todos os registros de respostas do banco de dados, formatando-os para visualização.
+	 */
+	public void listar() {
+		try {
+			ArrayList<Resposta> resposta = dao.getRespostas();
+			for(Resposta r : resposta) {
+				System.out.println("Id Resposta: " + r.getId());
+				System.out.println("Número da resposta: " + r.getNrResposta());
+				System.out.println("Descrição da resposta: " + r.getDsResposta());
+				System.out.println("------------------");
+			}
+		}catch(SQLException e) {
+			System.out.println("Houve um erro na listagem, verifique se há dados no banco");
+		}
 	}
 }

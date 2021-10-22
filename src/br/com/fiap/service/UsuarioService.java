@@ -4,9 +4,9 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.model.Usuario;
+
 public class UsuarioService {
 	private UsuarioDAO dao;
 	
@@ -132,4 +132,27 @@ public class UsuarioService {
 			dao.delete(u);
 		}
 	}	
+	
+	/**
+	 * Lista todos os registros de usuário no sistema, formatando-os para visualização
+	 */
+	public void listar() {
+		try {
+			ArrayList<Usuario> usuario = dao.getUsuarios();
+			for(Usuario u : usuario) {
+				System.out.println("Id do usuário: " + u.getId());
+				System.out.println("Nome do usuário: " + u.getNome());
+				System.out.println("Data de nascimento do usuário: " + u.getDataNascimento());
+				System.out.println("Gênero do usuário: " + u.getGenero());
+				System.out.println("Estado federativo do usuário: " + u.getEstadoUf());
+				System.out.println("Estado civil do usuário: " + u.getEstadoCivil());
+				System.out.println("E-mail do usuário: " + u.getEmail());
+				System.out.println("Senha do usuário: " + u.getSenha());
+				
+				System.out.println("------------------");
+			}
+		}catch(SQLException e) {
+			System.out.println("Houve um erro na listagem, verifique se há dados no banco");
+		}
+	}
 }

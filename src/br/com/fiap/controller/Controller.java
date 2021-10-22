@@ -11,6 +11,7 @@ import br.com.fiap.model.Usuario;
 import br.com.fiap.service.PerguntaService;
 import br.com.fiap.service.ProgressoUsuarioService;
 import br.com.fiap.service.QuizService;
+import br.com.fiap.service.RespostaService;
 import br.com.fiap.service.UsuarioService;
 
 public class Controller {
@@ -44,28 +45,24 @@ public class Controller {
 		q1.setResultado(10);
 		q1.setUsuario(u1);
 		
-		PerguntaService perguntaService = new PerguntaService();
 		
 		//perguntaService.inserir(p1);
 		
 //		p1.setNrPergunta(1000000);
 //		p1.setDsPergunta("Tudo bem?");
 //		perguntaService.deletar(p1);
-		perguntaService.listar();
+
 		
 		
-		ProgressoUsuarioService progressoService = new ProgressoUsuarioService();
 		
 //		progressoService.inserir(pro1);
 //		progressoService.atualizar(pro1);
 //		progressoService.deletar(pro1);
 		
 		
-		QuizService quizService = new QuizService();
 		
 //		quizService.inserir(q1);
 		
-		UsuarioService usuarioService = new UsuarioService();
 		u1.setId(5);
 		u1.setNome("Caue");
 		u1.setEmail("caue@caue.com");		
@@ -75,9 +72,22 @@ public class Controller {
 		u1.setEstadoCivil("Solteiro");
 		u1.setEstadoUf("SP");
 		
-////		usuarioService.inserir(u1);
-////		usuarioService.atualizar(u1);
+////	usuarioService.inserir(u1);
+////	usuarioService.atualizar(u1);
 //		usuarioService.deletar(u1);
+		
+		QuizService quizService = new QuizService();
+		ProgressoUsuarioService progressoService = new ProgressoUsuarioService();
+		PerguntaService perguntaService = new PerguntaService();
+		UsuarioService usuarioService = new UsuarioService();
+		RespostaService respostaService = new RespostaService();
+		
+		quizService.listar();
+		progressoService.listar();
+		perguntaService.listar();
+		usuarioService.listar();
+		respostaService.listar();
+		
 		
 	}
 }
