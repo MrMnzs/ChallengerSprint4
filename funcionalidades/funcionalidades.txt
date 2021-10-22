@@ -1,0 +1,3 @@
+INPUT - Inserir, atualizar e deletar em todas as entidades do banco de dados. Ou seja, um usuário pode fazer o seu cadastro, o mesmo conseguira responder a um quiz, pois o quiz pode ser inserido no banco, o usuário poderá responder às perguntas.
+
+OUTPUT - Fazer uma consulta dos dados no banco e formatando-os para melhor visualização
