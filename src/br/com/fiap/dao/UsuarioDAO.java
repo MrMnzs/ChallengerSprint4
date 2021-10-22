@@ -17,7 +17,7 @@ import br.com.fiap.model.Usuario;
 public class UsuarioDAO {
 	
 	/**
-	 * Insere dados de um usuário no banco de dados.
+	 * Insere dados de um usuário no banco de dados. 
 	 * @param Objeto do tipo usuário
 	 * @throws SQLException
 	 */

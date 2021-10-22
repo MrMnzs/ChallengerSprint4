@@ -30,8 +30,7 @@ public class Controller {
 		p1.setDsPergunta("Qual o seu nível de ansiedade e tristeza??");
 		p1.setNrPergunta(21);
 		p1.setResposta(r1);
-		
-		
+			
 		ProgressoUsuario pro1 = new ProgressoUsuario();
 		pro1.setDsSintoma("Ansiedade");
 		pro1.setId(30);
@@ -46,48 +45,35 @@ public class Controller {
 		q1.setUsuario(u1);
 		
 		
-		//perguntaService.inserir(p1);
+//		perguntaService.inserir(p1);
 		
 //		p1.setNrPergunta(1000000);
 //		p1.setDsPergunta("Tudo bem?");
 //		perguntaService.deletar(p1);
-
-		
-		
 		
 //		progressoService.inserir(pro1);
 //		progressoService.atualizar(pro1);
 //		progressoService.deletar(pro1);
 		
-		
-		
 //		quizService.inserir(q1);
 		
 		u1.setId(5);
-		u1.setNome("Caue");
-		u1.setEmail("caue@caue.com");		
-		u1.setDataNascimento(LocalDate.of(2001, 06, 26));
-		u1.setSenha("1234567");
-		u1.setGenero("M");
-		u1.setEstadoCivil("Solteiro");
-		u1.setEstadoUf("SP");
 		
 ////	usuarioService.inserir(u1);
 ////	usuarioService.atualizar(u1);
-//		usuarioService.deletar(u1);
-		
+			
 		QuizService quizService = new QuizService();
 		ProgressoUsuarioService progressoService = new ProgressoUsuarioService();
 		PerguntaService perguntaService = new PerguntaService();
 		UsuarioService usuarioService = new UsuarioService();
 		RespostaService respostaService = new RespostaService();
 		
-		quizService.listar();
-		progressoService.listar();
-		perguntaService.listar();
-		usuarioService.listar();
-		respostaService.listar();
+		//quizService.listar();
+		//progressoService.listar();
+		//perguntaService.listar();
+		//usuarioService.listar();
+		//respostaService.listar();
 		
-		
+		usuarioService.deletar(u1);
 	}
 }

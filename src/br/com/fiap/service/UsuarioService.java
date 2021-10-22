@@ -7,15 +7,21 @@ import java.util.ArrayList;
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.model.Usuario;
 
+/**
+ * Utiliza métodos da DAO para fazer validações ao enviar e receber dados do usuário no banco de dados
+ * @author giulio
+ *
+ */
 public class UsuarioService {
 	private UsuarioDAO dao;
 	
+	/**
+	 * Construtor para iniciar objeto dao sempre que a classe for instanciada em um objeto
+	 */
 	public UsuarioService() {
 		dao = new UsuarioDAO();
 	}
 	
-	
-
 	/**
 	 * Método para inserir um novo usário do sistema, chamando o método 'insert()' da classe UsuarioDAO
 	 * Várias validações são feitas nesse método a fim de enviar os dados para o banco apenas se as inforações tiverem sido fornecidas corretamente.
@@ -63,9 +69,7 @@ public class UsuarioService {
 		else {
 			dao.insert(u);
 		}
-
 	}
-	
 	
 	/**
 	 * Método que chama a função 'update()' da classe UsuarioDAO

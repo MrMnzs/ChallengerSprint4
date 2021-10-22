@@ -17,5 +17,4 @@ public class TesteConexao {
 		    System.out.println("Não foi possível acessar o banco de dados. Verifique suas credenciais. ERRO: " + e1.getMessage());
 		    }
 	}
-
 }

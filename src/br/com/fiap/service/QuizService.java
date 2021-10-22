@@ -5,9 +5,17 @@ import java.util.ArrayList;
 import br.com.fiap.dao.QuizDAO;
 import br.com.fiap.model.Quiz;
 
+/**
+ * Utiliza métodos da DAO para fazer validações ao enviar e receber dados do quiz no banco de dados
+ * @author giulio
+ *
+ */
 public class QuizService {
 	private QuizDAO dao;
 	
+	/**
+	 * Construtor para iniciar objeto dao sempre que a classe for instanciada em um objeto
+	 */
 	public QuizService() {
 		dao = new QuizDAO();
 	}

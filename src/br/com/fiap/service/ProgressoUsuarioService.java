@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import br.com.fiap.dao.ProgressoUsuarioDAO;
 import br.com.fiap.model.ProgressoUsuario;
 /**
- * Classe que aplica validações de acordo com regras de negócios para enviar dados ao banco e exibir dados para o usuário
+ * Utiliza métodos da DAO para fazer validações ao enviar e receber dados do progresso do usuário no banco de dados
  * @author Giulio Cesar
  */
 public class ProgressoUsuarioService {
 	private ProgressoUsuarioDAO dao;
 	
+	/**
+	 * Construtor para iniciar objeto dao sempre que a classe for instanciada em um objeto
+	 */
 	public ProgressoUsuarioService() {
 		dao = new ProgressoUsuarioDAO();
 	}
@@ -41,7 +44,6 @@ public class ProgressoUsuarioService {
 			dao.insert(p);
 		}
 	
-
 	/**
 	 * Valida todos os dados do Input para atualiza-lo no banco de dados.
 	 * @param Objeto do tipo ProgressoUsuario
@@ -70,7 +72,6 @@ public class ProgressoUsuarioService {
 		else {
 			dao.update(p);						
 		}
-	
 	}
 
 	/**
@@ -101,15 +102,15 @@ public class ProgressoUsuarioService {
 			for(ProgressoUsuario p : progresso) {
 				System.out.println("Id Progresso: " + p.getId());
 				System.out.println("Nome do usuário: " + p.getUsuario().getNome());
-				System.out.println("Quizes jogados: " + p.getQuiz().getId());
 				System.out.println("Valor total: " + p.getVlSintoma());
 				System.out.println("Resultado: " + p.getDsSintoma());
-				System.out.println("------------------");
+				System.out.println("------------------");                              
 			}
 		}catch(SQLException e) {
 			System.out.println("SQL Exception: houve um erro ao buscar os dados, verifique se a tabela contém dados");
 
+		}catch(NullPointerException e){
+			System.out.println("Algum parâmetro está sendo passado a mais");		
 		}
-	}
-	
+	}	
 }

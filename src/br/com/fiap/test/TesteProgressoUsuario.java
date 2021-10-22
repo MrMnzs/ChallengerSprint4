@@ -34,5 +34,4 @@ public class TesteProgressoUsuario {
 
 		dao.update(p1);
 	}
-
 }

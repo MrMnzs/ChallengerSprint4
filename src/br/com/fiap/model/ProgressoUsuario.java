@@ -43,9 +43,4 @@ public class ProgressoUsuario {
 	public void setDsSintoma(String dsSintoma) {
 		this.dsSintoma = dsSintoma;
 	}
-	
-	
-	
-	
-	
 }

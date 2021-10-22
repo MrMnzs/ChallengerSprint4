@@ -5,15 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * This class build a connection to a oracle database by using JDBC
- * It follows the 'Factory' pattern to code reuse
+ * Classe que constrói uma conexão com um banco de dados oracle usando JDBC
+ * Segue padrão de projeto 'Factory' para reutilização de código
  * @author Giulio Cesar
  *
  */
 public class ConnectionFactory {
 
 	/**
-	 * Method that returns a Oracle database connection
+	 * Retorna uma conexão com um banco de dados Oracle
 	 * @return Connection Object
 	 * @throws SQLException
 	 */
@@ -25,6 +25,5 @@ public class ConnectionFactory {
 				"060892");
 		
 		return conexao;
-	}
-	
+	}	
 }
